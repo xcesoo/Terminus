@@ -15,6 +15,10 @@ public class ContractConfiguration : IEntityTypeConfiguration<Contract>
         builder.Property(c => c.Id)
             .HasColumnName("id")
             .ValueGeneratedNever();
+        
+        builder.Property(c => c.IsTerminated)
+            .HasColumnName("is_terminated")
+            .HasDefaultValue(false);
 
         builder.Property(c => c.ContractNumber)
             .HasColumnName("contract_number")

@@ -12,6 +12,8 @@ public class Contract
 
     public Guid ProductId { get; private set; }
     public Product Product { get; private set; }
+    
+    public bool IsTerminated { get; private set; } = false;
 
     private readonly List<Waybill> _waybills = new();
     public IReadOnlyCollection<Waybill> Waybills => _waybills.AsReadOnly();
@@ -31,5 +33,11 @@ public class Contract
     public static Contract Create(string contractNumber, Guid consumerId, Guid productId, int quantity, DateTime conclusionDate)
     {
         return new Contract(contractNumber, consumerId, productId, quantity, conclusionDate);
+    }
+    
+    public void Terminate()
+    {
+        if (IsTerminated) throw new InvalidOperationException("Договір вже розірвано.");
+        IsTerminated = true;
     }
 }

@@ -15,6 +15,10 @@ public class WaybillConfiguration : IEntityTypeConfiguration<Waybill>
         builder.Property(w => w.Id)
             .HasColumnName("id")
             .ValueGeneratedNever();
+        
+        builder.Property(w => w.IsCancelled)
+            .HasColumnName("is_cancelled")
+            .HasDefaultValue(false);
 
         builder.Property(w => w.WaybillNumber)
             .HasColumnName("waybill_number")

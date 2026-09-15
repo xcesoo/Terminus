@@ -9,6 +9,7 @@ public abstract class Waybill
 
     public Guid ContractId { get; private set; }
     public Contract Contract { get; private set; }
+    public bool IsCancelled { get; private set; } = false;
 
     protected Waybill() { }
 
@@ -19,6 +20,11 @@ public abstract class Waybill
         ContractId = contractId;
         ShippedQuantity = shippedQuantity;
         DispatchDate = dispatchDate;
+    }
+    public void Cancel()
+    {
+        if (IsCancelled) throw new InvalidOperationException("ТТН вже скасовано.");
+        IsCancelled = true;
     }
 }
 
