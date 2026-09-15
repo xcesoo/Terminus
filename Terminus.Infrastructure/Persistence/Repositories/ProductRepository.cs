@@ -17,4 +17,7 @@ public class ProductRepository(TerminusDbContext dbContext) : IProductRepository
 
     public async Task DeleteAsync(Product product, CancellationToken cancellationToken = default) =>
         await dbContext.Products.Where(p => p.Id == product.Id).ExecuteDeleteAsync(cancellationToken);
+    
+    public async Task<Product?> GetByCodeAsync(string code, CancellationToken cancellationToken = default) =>
+        await dbContext.Products.FirstOrDefaultAsync(p => p.Code == code, cancellationToken);
 }
