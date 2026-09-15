@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Terminus.Domain.Entities;
+using Terminus.Domain.Interfaces.Repositories;
 using Terminus.Infrastructure.Persistence.Configurations;
 
 namespace Terminus.Infrastructure.Persistence;
 
-public class TerminusDbContext : DbContext
+public class TerminusDbContext : DbContext, IUnitOfWork
 {
     public TerminusDbContext(DbContextOptions<TerminusDbContext> options) : base(options) { }
 

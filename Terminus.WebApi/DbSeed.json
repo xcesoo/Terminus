@@ -1,0 +1,856 @@
+{
+  "consumers": [
+    {
+      "name": "ТОВ Розетка",
+      "address": "м. Київ, вул. Кирилівська, 82",
+      "bankAccount": "UA893052990000026001234567001"
+    },
+    {
+      "name": "ТОВ ФК ЕВО",
+      "address": "м. Київ, Харківське шосе, 201",
+      "bankAccount": "UA893052990000026001234567002"
+    },
+    {
+      "name": "ТОВ Епіцентр К",
+      "address": "м. Київ, вул. Братиславська, 11",
+      "bankAccount": "UA893052990000026001234567003"
+    },
+    {
+      "name": "Корпорація АТБ",
+      "address": "м. Дніпро, пр. Олександра Поля, 40",
+      "bankAccount": "UA893052990000026001234567004"
+    },
+    {
+      "name": "ТОВ Сільпо-Фуд",
+      "address": "м. Київ, вул. Бутлерова, 1",
+      "bankAccount": "UA893052990000026001234567005"
+    },
+    {
+      "name": "ТОВ Алло",
+      "address": "м. Дніпро, вул. Барикадна, 15",
+      "bankAccount": "UA893052990000026001234567006"
+    },
+    {
+      "name": "ТОВ Комфі Трейд",
+      "address": "м. Дніпро, бульвар Слави, 6",
+      "bankAccount": "UA893052990000026001234567007"
+    },
+    {
+      "name": "ПрАТ Фокстрот",
+      "address": "м. Київ, вул. Дорогожицька, 1",
+      "bankAccount": "UA893052990000026001234567008"
+    },
+    {
+      "name": "ТОВ Нова Пошта",
+      "address": "м. Київ, Столичне шосе, 103",
+      "bankAccount": "UA893052990000026001234567009"
+    },
+    {
+      "name": "АТ Укрпошта",
+      "address": "м. Київ, вул. Хрещатик, 22",
+      "bankAccount": "UA893052990000026001234567010"
+    },
+    {
+      "name": "ТОВ Міст Експрес",
+      "address": "м. Львів, вул. Зелена, 147",
+      "bankAccount": "UA893052990000026001234567011"
+    },
+    {
+      "name": "ТОВ Ашан Україна",
+      "address": "м. Київ, пр. Степана Бандери, 15",
+      "bankAccount": "UA893052990000026001234567012"
+    },
+    {
+      "name": "ТОВ Метро Кеш енд Керрі Україна",
+      "address": "м. Київ, пр. Петра Григоренка, 43",
+      "bankAccount": "UA893052990000026001234567013"
+    },
+    {
+      "name": "ТОВ Омега",
+      "address": "м. Дніпро, Запорізьке шосе, 37",
+      "bankAccount": "UA893052990000026001234567014"
+    },
+    {
+      "name": "ТОВ Траш",
+      "address": "м. Київ, вул. Магнітогорська, 1",
+      "bankAccount": "UA893052990000026001234567015"
+    },
+    {
+      "name": "ТОВ Фоззі-Фуд",
+      "address": "м. Київ, вул. Гната Хоткевича, 1",
+      "bankAccount": "UA893052990000026001234567016"
+    },
+    {
+      "name": "ПАТ Укрнафта",
+      "address": "м. Київ, Несторівський провулок, 3",
+      "bankAccount": "UA893052990000026001234567017"
+    },
+    {
+      "name": "ТОВ ОККО-Рітейл",
+      "address": "м. Львів, вул. Героїв УПА, 72",
+      "bankAccount": "UA893052990000026001234567018"
+    },
+    {
+      "name": "ТОВ ВОГ РІТЕЙЛ",
+      "address": "м. Луцьк, вул. Єршова, 1",
+      "bankAccount": "UA893052990000026001234567019"
+    },
+    {
+      "name": "ПІІ АМІК УКРАЇНА",
+      "address": "м. Київ, вул. Верхній Вал, 68",
+      "bankAccount": "UA893052990000026001234567020"
+    },
+    {
+      "name": "ТОВ БРСМ-Нафта",
+      "address": "м. Київ, вул. Промислова, 4",
+      "bankAccount": "UA893052990000026001234567021"
+    },
+    {
+      "name": "ТОВ Еко",
+      "address": "м. Київ, Повітрофлотський проспект, 66",
+      "bankAccount": "UA893052990000026001234567022"
+    },
+    {
+      "name": "ТОВ РозеткаПей",
+      "address": "м. Київ, вул. Костянтинівська, 71",
+      "bankAccount": "UA893052990000026001234567023"
+    },
+    {
+      "name": "ТОВ Спектр-Агро",
+      "address": "м. Обухів, вул. Промислова, 20",
+      "bankAccount": "UA893052990000026001234567024"
+    },
+    {
+      "name": "ТОВ Ерідон",
+      "address": "с. Софіївська Борщагівка, вул. Київська, 24",
+      "bankAccount": "UA893052990000026001234567025"
+    },
+    {
+      "name": "ТОВ Нібулон",
+      "address": "м. Миколаїв, Каботажний узвіз, 1",
+      "bankAccount": "UA893052990000026001234567026"
+    },
+    {
+      "name": "ПрАТ МХП",
+      "address": "м. Київ, вул. Академіка Заболотного, 158",
+      "bankAccount": "UA893052990000026001234567027"
+    },
+    {
+      "name": "ТОВ Астарта-Київ",
+      "address": "м. Київ, вул. Ярославська, 58",
+      "bankAccount": "UA893052990000026001234567028"
+    },
+    {
+      "name": "ТОВ Кернел-Трейд",
+      "address": "м. Київ, провулок Тараса Шевченка, 3",
+      "bankAccount": "UA893052990000026001234567029"
+    },
+    {
+      "name": "ПрАТ Карлсберг Україна",
+      "address": "м. Запоріжжя, вул. Василя Стуса, 6",
+      "bankAccount": "UA893052990000026001234567030"
+    },
+    {
+      "name": "ПрАТ Оболонь",
+      "address": "м. Київ, вул. Богатирська, 3",
+      "bankAccount": "UA893052990000026001234567031"
+    },
+    {
+      "name": "Кондитерська корпорація Рошен",
+      "address": "м. Київ, пр. Науки, 1",
+      "bankAccount": "UA893052990000026001234567032"
+    },
+    {
+      "name": "ПрАТ АВК",
+      "address": "м. Київ, вул. Межигірська, 82",
+      "bankAccount": "UA893052990000026001234567033"
+    },
+    {
+      "name": "ТОВ Корпорація Біосфера",
+      "address": "м. Дніпро, пр. Богдана Хмельницького, 147",
+      "bankAccount": "UA893052990000026001234567034"
+    },
+    {
+      "name": "ПрАТ Фармацевтична фірма Дарниця",
+      "address": "м. Київ, вул. Бориспільська, 13",
+      "bankAccount": "UA893052990000026001234567035"
+    },
+    {
+      "name": "ПАТ Фармак",
+      "address": "м. Київ, вул. Кирилівська, 63",
+      "bankAccount": "UA893052990000026001234567036"
+    },
+    {
+      "name": "ТОВ Юрія-Фарм",
+      "address": "м. Київ, вул. Миколи Амосова, 10",
+      "bankAccount": "UA893052990000026001234567037"
+    },
+    {
+      "name": "ТОВ БаДМ",
+      "address": "м. Дніпро, вул. Панікахи, 2",
+      "bankAccount": "UA893052990000026001234567038"
+    },
+    {
+      "name": "ТОВ Оптіма-Фарм",
+      "address": "м. Київ, вул. Бориспільська, 9",
+      "bankAccount": "UA893052990000026001234567039"
+    },
+    {
+      "name": "ТОВ Цитрус",
+      "address": "м. Одеса, вул. Рішельєвська, 14",
+      "bankAccount": "UA893052990000026001234567040"
+    },
+    {
+      "name": "ТОВ Мойо",
+      "address": "м. Київ, вул. Марка Вовчка, 18",
+      "bankAccount": "UA893052990000026001234567041"
+    },
+    {
+      "name": "ТОВ КТС",
+      "address": "м. Рівне, вул. Соборна, 1",
+      "bankAccount": "UA893052990000026001234567042"
+    },
+    {
+      "name": "ТОВ Ельдорадо",
+      "address": "м. Київ, Глибочицька, 44",
+      "bankAccount": "UA893052990000026001234567043"
+    },
+    {
+      "name": "ТОВ НоваПей",
+      "address": "м. Київ, Столичне шосе, 103",
+      "bankAccount": "UA893052990000026001234567044"
+    },
+    {
+      "name": "ТОВ Будмен",
+      "address": "м. Харків, пр. Льва Ландау, 2",
+      "bankAccount": "UA893052990000026001234567045"
+    },
+    {
+      "name": "ТОВ Олді",
+      "address": "м. Київ, вул. Гарматна, 7",
+      "bankAccount": "UA893052990000026001234567046"
+    },
+    {
+      "name": "ТОВ Леруа Мерлен Україна",
+      "address": "м. Київ, вул. Полярна, 17",
+      "bankAccount": "UA893052990000026001234567047"
+    },
+    {
+      "name": "ДП НАЕК Енергоатом",
+      "address": "м. Київ, вул. Назарівська, 3",
+      "bankAccount": "UA893052990000026001234567048"
+    },
+    {
+      "name": "ПАТ Укренерго",
+      "address": "м. Київ, вул. Симона Петлюри, 25",
+      "bankAccount": "UA893052990000026001234567049"
+    },
+    {
+      "name": "ТОВ ДТЕК Мережі",
+      "address": "м. Київ, вул. Новокостянтинівська, 1",
+      "bankAccount": "UA893052990000026001234567050"
+    }
+  ],
+  "products": [
+    {
+      "code": "PRD-1001",
+      "name": "Генератор бензиновий Honda EU22i 2.2кВт",
+      "price": 45000.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1002",
+      "name": "Генератор дизельний Hyundai DHY 8000SE",
+      "price": 72500.50,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1003",
+      "name": "Генератор інверторний Konner&Sohnen 3кВт",
+      "price": 28900.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1004",
+      "name": "Портативна зарядна станція EcoFlow Delta 2",
+      "price": 41999.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1005",
+      "name": "Портативна зарядна станція EcoFlow River 2 Max",
+      "price": 21500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1006",
+      "name": "Портативна зарядна станція Bluetti AC200MAX",
+      "price": 68000.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1007",
+      "name": "Сонячна панель EcoFlow 160W Solar Panel",
+      "price": 12500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1008",
+      "name": "Акумулятор гелевий LogicPower 100Ah",
+      "price": 6200.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1009",
+      "name": "Джерело безперебійного живлення APC Back-UPS",
+      "price": 4500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1010",
+      "name": "Інвертор напруги Luminous 1500VA",
+      "price": 8900.50,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1011",
+      "name": "Ноутбук Apple MacBook Pro 14 M1 Max 32GB",
+      "price": 125000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1012",
+      "name": "Ноутбук Apple MacBook Pro 16 M2 Pro 16GB",
+      "price": 115000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1013",
+      "name": "Ноутбук Lenovo ThinkPad T14 Gen 4",
+      "price": 54000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1014",
+      "name": "Ноутбук Asus ROG Strix G15",
+      "price": 62000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1015",
+      "name": "Ноутбук Dell XPS 13 Plus",
+      "price": 78000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1016",
+      "name": "Ноутбук HP ProBook 450 G9",
+      "price": 32000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1017",
+      "name": "Смартфон Apple iPhone 15 Pro Max 256GB",
+      "price": 53000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1018",
+      "name": "Смартфон Apple iPhone 14 128GB",
+      "price": 31000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1019",
+      "name": "Смартфон Samsung Galaxy S24 Ultra",
+      "price": 51500.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1020",
+      "name": "Смартфон Xiaomi 14 256GB",
+      "price": 34999.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1021",
+      "name": "Планшет Apple iPad Pro 11 M2",
+      "price": 39500.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1022",
+      "name": "Планшет Samsung Galaxy Tab S9",
+      "price": 32999.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1023",
+      "name": "Роутер Starlink Standard Kit",
+      "price": 22000.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1024",
+      "name": "Роутер MikroTik hAP ax2",
+      "price": 2800.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1025",
+      "name": "Комутатор Cisco Catalyst 1000",
+      "price": 14500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1026",
+      "name": "Точка доступу Ubiquiti UniFi6 Lite",
+      "price": 4200.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1027",
+      "name": "Сервер Dell PowerEdge R450",
+      "price": 145000.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1028",
+      "name": "Жорсткий диск Seagate IronWolf 8TB",
+      "price": 8900.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1029",
+      "name": "Твердотільний накопичувач Samsung 980 Pro 1TB",
+      "price": 3999.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1030",
+      "name": "Твердотільний накопичувач Kingston NV2 2TB",
+      "price": 4500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1031",
+      "name": "Телевізор Samsung 55 CU7100",
+      "price": 21000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1032",
+      "name": "Телевізор LG OLED C3 65",
+      "price": 85000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1033",
+      "name": "Пральна машина LG F2J3",
+      "price": 15400.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1034",
+      "name": "Пральна машина Bosch WAN282",
+      "price": 19500.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1035",
+      "name": "Холодильник Samsung RB34",
+      "price": 22000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1036",
+      "name": "Холодильник Whirlpool W7",
+      "price": 25500.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1037",
+      "name": "Мікрохвильова піч Panasonic NN-ST34",
+      "price": 4200.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1038",
+      "name": "Мікрохвильова піч Samsung ME88",
+      "price": 3800.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1039",
+      "name": "Кавомашина DeLonghi Magnifica S",
+      "price": 13500.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1040",
+      "name": "Кавомашина Philips серії 2200",
+      "price": 14200.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1041",
+      "name": "Гриль Tefal OptiGrill Elite",
+      "price": 9500.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1042",
+      "name": "Мультиварка Moulinex CE501",
+      "price": 3200.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1043",
+      "name": "Робот-пилосос Xiaomi Robot Vacuum S10",
+      "price": 9999.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1044",
+      "name": "Робот-пилосос Roborock S8",
+      "price": 25000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1045",
+      "name": "Акумуляторний пилосос Dyson V15",
+      "price": 32000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1046",
+      "name": "Блендер Braun Multiquick 7",
+      "price": 3400.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1047",
+      "name": "М'ясорубка Bosch MFW3520",
+      "price": 2800.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1048",
+      "name": "Кондиціонер Cooper&Hunter CH-S09FTXE",
+      "price": 18500.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1049",
+      "name": "Кондиціонер Gree Bora GWH09",
+      "price": 15000.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1050",
+      "name": "Бойлер Ariston Lydos R 80",
+      "price": 6800.00,
+      "priceListNumber": "PL-2026-10"
+    },
+    {
+      "code": "PRD-1051",
+      "name": "Монітор Dell UltraSharp 27 U2722D",
+      "price": 16500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1052",
+      "name": "Монітор LG UltraGear 27GN800",
+      "price": 11000.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1053",
+      "name": "Монітор Samsung Odyssey G7 32",
+      "price": 24000.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1054",
+      "name": "Миша бездротова Logitech MX Master 3S",
+      "price": 4300.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1055",
+      "name": "Клавіатура Keychron K8 Pro",
+      "price": 4900.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1056",
+      "name": "Клавіатура Logitech MX Keys",
+      "price": 5100.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1057",
+      "name": "Навушники Apple AirPods Pro 2",
+      "price": 10500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1058",
+      "name": "Навушники Sony WH-1000XM5",
+      "price": 14000.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1059",
+      "name": "Смарт-годинник Apple Watch Series 9",
+      "price": 18500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1060",
+      "name": "Смарт-годинник Garmin Fenix 7X",
+      "price": 35000.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1061",
+      "name": "Моторне масло Motul 8100 X-cess 5W-40 5л",
+      "price": 2100.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1062",
+      "name": "Моторне масло Castrol EDGE 5W-30 4л",
+      "price": 1800.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1063",
+      "name": "Моторне масло Mobil 1 ESP 5W-30 4л",
+      "price": 1950.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1064",
+      "name": "Акумулятор автомобільний Bosch S4 60Ah",
+      "price": 3100.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1065",
+      "name": "Акумулятор автомобільний Varta Blue Dynamic 74Ah",
+      "price": 3600.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1066",
+      "name": "Шина зимова Michelin X-Ice Snow 205/55 R16",
+      "price": 4200.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1067",
+      "name": "Шина літня Continental PremiumContact 6 225/45 R17",
+      "price": 4800.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1068",
+      "name": "Відеореєстратор 70mai Dash Cam Pro Plus",
+      "price": 2900.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1069",
+      "name": "Пускозарядний пристрій Baseus Super Energy",
+      "price": 2100.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1070",
+      "name": "Компресор автомобільний Hyundai HHY 30",
+      "price": 1250.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1071",
+      "name": "Протеїн Optimum Nutrition Gold Standard Whey 2.27кг",
+      "price": 3200.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1072",
+      "name": "Креатин моногідрат BiotechUSA 500г",
+      "price": 750.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1073",
+      "name": "Креатин моногідрат MyProtein 1кг",
+      "price": 1100.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1074",
+      "name": "Цитрулін малат OstroVit 210г",
+      "price": 450.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1075",
+      "name": "Передтренувальний комплекс Cellucor C4 Original",
+      "price": 1050.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1076",
+      "name": "Кофеїн в таблетках Scitec Nutrition 100 капсул",
+      "price": 350.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1077",
+      "name": "BCAA Xtend Original 420г",
+      "price": 1150.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1078",
+      "name": "Гейнер BSN True-Mass 2.6кг",
+      "price": 2400.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1079",
+      "name": "Вітаміни Opti-Men Optimum Nutrition 150 таб",
+      "price": 1400.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1080",
+      "name": "Омега-3 NOW Foods 200 капсул",
+      "price": 650.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1081",
+      "name": "Гантель складана 15 кг WCG",
+      "price": 1800.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1082",
+      "name": "Килимок для фітнесу Reebok",
+      "price": 950.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1083",
+      "name": "Шейкер SmartShake 600мл",
+      "price": 350.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1084",
+      "name": "Фітнес-резинки У-Формі набір 5 шт",
+      "price": 250.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1085",
+      "name": "Масажер перкусійний Phoenix A2",
+      "price": 2400.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1086",
+      "name": "Крісло офісне GT Racer X-2534",
+      "price": 4500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1087",
+      "name": "Геймерське крісло Cougar Armor One",
+      "price": 8900.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1088",
+      "name": "Стіл з регулюванням висоти Loctek",
+      "price": 12500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1089",
+      "name": "Веб-камера Logitech C920 HD Pro",
+      "price": 3200.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1090",
+      "name": "Мікрофон HyperX QuadCast",
+      "price": 5400.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1091",
+      "name": "Гра настільна Монополія Україна",
+      "price": 950.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1092",
+      "name": "Конструктор LEGO Technic McLaren",
+      "price": 6800.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1093",
+      "name": "Ігрова приставка Sony PlayStation 5",
+      "price": 23500.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1094",
+      "name": "Ігрова приставка Xbox Series X",
+      "price": 22900.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1095",
+      "name": "Геймпад Sony DualSense",
+      "price": 2800.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1096",
+      "name": "Батарейки Duracell AA 12 шт",
+      "price": 380.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1097",
+      "name": "Мережевий фільтр Sven Fort 5м",
+      "price": 850.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1098",
+      "name": "Кабель Apple USB-C to USB-C 2m",
+      "price": 999.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1099",
+      "name": "Зарядний пристрій Baseus GaN3 65W",
+      "price": 1400.00,
+      "priceListNumber": "PL-2026-09"
+    },
+    {
+      "code": "PRD-1100",
+      "name": "Папір офісний A4 500 аркушів",
+      "price": 185.50,
+      "priceListNumber": "PL-2026-09"
+    }
+  ]
+}
