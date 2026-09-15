@@ -7,7 +7,7 @@ namespace Terminus.Infrastructure.Persistence.Repositories;
 public class ContractRepository(TerminusDbContext dbContext) : IContractRepository
 {
     public Task<Contract?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
-        dbContext.Contracts.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+        dbContext.Contracts.Include(c => c.Waybills).FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
 
     public async Task<IReadOnlyCollection<Contract>> GetAllAsync(CancellationToken cancellationToken = default) =>
         await dbContext.Contracts.AsNoTracking().ToListAsync(cancellationToken);

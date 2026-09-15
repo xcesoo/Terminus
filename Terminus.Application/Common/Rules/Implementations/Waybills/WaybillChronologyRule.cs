@@ -6,8 +6,12 @@ public class WaybillChronologyRule : IBusinessRule
 {
     public RuleResult Apply(IRuleContext context) => context switch
     {
-        CreateWaybillContext ctx when ctx.DispatchDate.Date < ctx.Contract.ConclusionDate.Date 
-            => RuleResult.Failed("Дата відвантаження ТТН не може бути ранішою за дату укладання договору."),
+        DispatchWaybillContext ctx when !ctx.Contract.ConclusionDate.HasValue 
+            => RuleResult.Failed("Неможливо відвантажити ТТН: договір ще не підписано (відсутня дата укладання)."),
+        
+        DispatchWaybillContext ctx when ctx.Contract.ConclusionDate.HasValue && 
+                                        ctx.DispatchDate.Date < ctx.Contract.ConclusionDate.Value.Date 
+            => RuleResult.Failed("Дата відвантаження ТТН не може бути ранішою за дату підписання договору."),
             
         _ => RuleResult.Ok()
     };

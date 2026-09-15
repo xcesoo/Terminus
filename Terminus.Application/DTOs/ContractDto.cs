@@ -6,4 +6,4 @@ public record ContractDto(
     Guid ConsumerId, 
     Guid ProductId, 
     int Quantity, 
-    DateTime ConclusionDate);
+    DateTime? ConclusionDate);

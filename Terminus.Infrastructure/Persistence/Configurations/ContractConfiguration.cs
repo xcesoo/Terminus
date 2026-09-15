@@ -16,9 +16,10 @@ public class ContractConfiguration : IEntityTypeConfiguration<Contract>
             .HasColumnName("id")
             .ValueGeneratedNever();
         
-        builder.Property(c => c.IsTerminated)
-            .HasColumnName("is_terminated")
-            .HasDefaultValue(false);
+        builder.Property(c => c.Status)
+            .HasColumnName("status")
+            .HasConversion<string>() 
+            .IsRequired();
 
         builder.Property(c => c.ContractNumber)
             .HasColumnName("contract_number")
@@ -27,7 +28,7 @@ public class ContractConfiguration : IEntityTypeConfiguration<Contract>
 
         builder.Property(c => c.ConclusionDate)
             .HasColumnName("conclusion_date")
-            .IsRequired();
+            .HasDefaultValue(null);
 
         builder.Property(c => c.Quantity)
             .HasColumnName("quantity")

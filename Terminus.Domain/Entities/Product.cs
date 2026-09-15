@@ -15,7 +15,7 @@ public class Product
 
     private Product(string code, string name, decimal price, string priceListNumber)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         Code = code;
         Name = name;
         Price = price;

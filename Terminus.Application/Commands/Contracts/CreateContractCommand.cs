@@ -10,8 +10,7 @@ public readonly record struct CreateContractCommand(
     string ContractNumber,
     Guid ConsumerId,
     Guid ProductId,
-    int Quantity,
-    DateTime ConclusionDate) : IRequest<Guid>;
+    int Quantity) : IRequest<Guid>;
 
 public class CreateContractCommandHandler(
     IConsumerRepository consumerRepository,
@@ -29,13 +28,13 @@ public class CreateContractCommandHandler(
         var product = await productRepository.GetByIdAsync(request.ProductId, cancellationToken)
             ?? throw new KeyNotFoundException("Виріб не знайдено.");
 
-        var ruleContext = new CreateContractContext(consumer, product, request.Quantity, request.ConclusionDate);
+        var ruleContext = new CreateContractContext(consumer, product, request.Quantity);
         
         var validationResult = ruleEngine.Verify(ruleContext);
         if (!validationResult.IsSuccess)
             throw new InvalidOperationException(validationResult.ErrorMessage);
 
-        var contract = Contract.Create(request.ContractNumber, request.ConsumerId, request.ProductId, request.Quantity, request.ConclusionDate);
+        var contract = Contract.Create(request.ContractNumber, request.ConsumerId, request.ProductId, request.Quantity);
         
         await contractRepository.AddAsync(contract, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

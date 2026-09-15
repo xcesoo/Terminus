@@ -16,9 +16,10 @@ public class WaybillConfiguration : IEntityTypeConfiguration<Waybill>
             .HasColumnName("id")
             .ValueGeneratedNever();
         
-        builder.Property(w => w.IsCancelled)
-            .HasColumnName("is_cancelled")
-            .HasDefaultValue(false);
+        builder.Property(w => w.Status)
+            .HasColumnName("status")
+            .HasConversion<string>() 
+            .IsRequired();
 
         builder.Property(w => w.WaybillNumber)
             .HasColumnName("waybill_number")
@@ -27,7 +28,7 @@ public class WaybillConfiguration : IEntityTypeConfiguration<Waybill>
 
         builder.Property(w => w.DispatchDate)
             .HasColumnName("dispatch_date")
-            .IsRequired();
+            .HasDefaultValue(null);
 
         builder.Property(w => w.ShippedQuantity)
             .HasColumnName("shipped_quantity")

@@ -10,7 +10,6 @@ public readonly record struct CreateWaybillCommand(
     Guid ContractId,
     string WaybillNumber,
     int ShippedQuantity,
-    DateTime DispatchDate,
     string TransportType, 
     string? TransportIdentifier, 
     string? ReceiptNumber,
@@ -31,7 +30,7 @@ public class CreateWaybillCommandHandler(
         if (contract == null)
             throw new KeyNotFoundException("Договір не знайдено.");
 
-        var context = new CreateWaybillContext(contract, request.ShippedQuantity, request.DispatchDate);
+        var context = new CreateWaybillContext(contract, request.ShippedQuantity);
 
         var validationResult = ruleEngine.Verify(context);
         if (!validationResult.IsSuccess)
@@ -39,13 +38,13 @@ public class CreateWaybillCommandHandler(
 
         Waybill waybill = request.TransportType.ToLower() switch
         {
-            "auto" => AutoWaybill.Create(request.WaybillNumber, request.ContractId, request.ShippedQuantity, request.DispatchDate, 
+            "auto" => AutoWaybill.Create(request.WaybillNumber, request.ContractId, request.ShippedQuantity,  
                 request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum),
                 
-            "train" => TrainWaybill.Create(request.WaybillNumber, request.ContractId, request.ShippedQuantity, request.DispatchDate, 
+            "train" => TrainWaybill.Create(request.WaybillNumber, request.ContractId, request.ShippedQuantity,  
                 request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum),
                 
-            "avia" => AviaWaybill.Create(request.WaybillNumber, request.ContractId, request.ShippedQuantity, request.DispatchDate, 
+            "avia" => AviaWaybill.Create(request.WaybillNumber, request.ContractId, request.ShippedQuantity,  
                 request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum),
                 
             _ => throw new ArgumentException("Невідомий тип транспорту")

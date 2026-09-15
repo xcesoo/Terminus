@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Terminus.Domain.Entities;
+using Terminus.Domain.Enums;
 using Terminus.Domain.Interfaces.Repositories;
 
 namespace Terminus.Infrastructure.Persistence.Repositories;
@@ -7,7 +8,7 @@ namespace Terminus.Infrastructure.Persistence.Repositories;
 public class WaybillRepository(TerminusDbContext dbContext) : IWaybillRepository
 {
     public Task<Waybill?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
-        dbContext.Waybills.FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
+        dbContext.Waybills.Include(w => w.Contract).FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
 
     public async Task<IReadOnlyCollection<Waybill>> GetAllAsync(CancellationToken cancellationToken = default) =>
         await dbContext.Waybills.AsNoTracking().Include(w=>w.Contract).ThenInclude(c=>c.Product).ToListAsync(cancellationToken);
@@ -22,7 +23,9 @@ public class WaybillRepository(TerminusDbContext dbContext) : IWaybillRepository
     public async Task<IReadOnlyCollection<Waybill>> GetWaybillsByDateAsync(DateTime dispatchDate, CancellationToken cancellationToken = default) =>
         await dbContext.Waybills
             .AsNoTracking()
-            .Where(w => w.DispatchDate.Date == dispatchDate.Date && !w.IsCancelled)
+            .Where(w => w.Status == WaybillStatus.Dispatched 
+                        && w.DispatchDate >= dispatchDate.Date 
+                        && w.DispatchDate < dispatchDate.Date.AddDays(1))
             .Include(w => w.Contract)
             .ThenInclude(c => c.Product)
             .ToListAsync(cancellationToken);
@@ -31,7 +34,9 @@ public class WaybillRepository(TerminusDbContext dbContext) : IWaybillRepository
     public async Task<IReadOnlyCollection<Waybill>> GetWaybillsByPeriodAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default) =>
         await dbContext.Waybills
             .AsNoTracking()
-            .Where(w => w.DispatchDate.Date >= startDate.Date && w.DispatchDate.Date <= endDate.Date && !w.IsCancelled)
+            .Where(w => w.Status == WaybillStatus.Dispatched 
+                        && w.DispatchDate >= startDate.Date 
+                        && w.DispatchDate < endDate.Date.AddDays(1))
             .Include(w => w.Contract)
             .ThenInclude(c => c.Product)
             .ToListAsync(cancellationToken);
