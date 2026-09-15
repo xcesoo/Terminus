@@ -28,11 +28,21 @@ public class Consumer
         return new Consumer(name, address, bankAccount);
     }
 
-    public void UpdateBankDetails(string newBankAccount, string newAddress)
+    public void ChangeName(string newName)
+    { 
+        ArgumentException.ThrowIfNullOrWhiteSpace(newName, "Назва не може бути порожнім.");
+        Name = newName;
+    }
+ 
+    public void ChangeAddress(string newAddress)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(newBankAccount);
-        ArgumentException.ThrowIfNullOrWhiteSpace(newAddress);
-        BankAccount = newBankAccount;
+        ArgumentException.ThrowIfNullOrWhiteSpace(newAddress, "Адреса не може бути порожньою.");
         Address = newAddress;
+    }
+
+    public void ChangeBankAccount(string newBankAccount)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(newBankAccount, "Рахунок не може бути порожнім.");
+        BankAccount = newBankAccount;
     }
 }

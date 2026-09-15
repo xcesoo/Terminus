@@ -1,6 +1,6 @@
 using Terminus.Application.Common.Rules.Interfaces;
 
-namespace Terminus.Application.Common.Rules.Implementations;
+namespace Terminus.Application.Common.Rules.Implementations.Contracts;
 
 public class ContractMinimumQuantityRule : IBusinessRule
 {

@@ -10,7 +10,7 @@ public class WaybillRepository(TerminusDbContext dbContext) : IWaybillRepository
         dbContext.Waybills.FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
 
     public async Task<IReadOnlyCollection<Waybill>> GetAllAsync(CancellationToken cancellationToken = default) =>
-        await dbContext.Waybills.AsNoTracking().ToListAsync(cancellationToken);
+        await dbContext.Waybills.AsNoTracking().Include(w=>w.Contract).ThenInclude(c=>c.Product).ToListAsync(cancellationToken);
 
     public async Task AddAsync(Waybill waybill, CancellationToken cancellationToken = default) =>
         await dbContext.Waybills.AddAsync(waybill, cancellationToken);
@@ -22,7 +22,7 @@ public class WaybillRepository(TerminusDbContext dbContext) : IWaybillRepository
     public async Task<IReadOnlyCollection<Waybill>> GetWaybillsByDateAsync(DateTime dispatchDate, CancellationToken cancellationToken = default) =>
         await dbContext.Waybills
             .AsNoTracking()
-            .Where(w => w.DispatchDate.Date == dispatchDate.Date)
+            .Where(w => w.DispatchDate.Date == dispatchDate.Date && !w.IsCancelled)
             .Include(w => w.Contract)
             .ThenInclude(c => c.Product)
             .ToListAsync(cancellationToken);
@@ -31,7 +31,7 @@ public class WaybillRepository(TerminusDbContext dbContext) : IWaybillRepository
     public async Task<IReadOnlyCollection<Waybill>> GetWaybillsByPeriodAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default) =>
         await dbContext.Waybills
             .AsNoTracking()
-            .Where(w => w.DispatchDate.Date >= startDate.Date && w.DispatchDate.Date <= endDate.Date)
+            .Where(w => w.DispatchDate.Date >= startDate.Date && w.DispatchDate.Date <= endDate.Date && !w.IsCancelled)
             .Include(w => w.Contract)
             .ThenInclude(c => c.Product)
             .ToListAsync(cancellationToken);
