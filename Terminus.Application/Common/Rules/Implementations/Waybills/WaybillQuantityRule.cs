@@ -5,15 +5,33 @@ namespace Terminus.Application.Common.Rules.Implementations.Waybills;
 
 public class WaybillQuantityRule : IBusinessRule
 {
-    public RuleResult Apply(IRuleContext context) => context switch
+    public RuleResult Apply(IRuleContext context)
     {
-        CreateWaybillContext ctx when ctx.RequestedQuantity <= 0 
-            => RuleResult.Failed("Кількість відвантаження має бути більшою за нуль."),
+        if (context is not CreateWaybillContext ctx) 
+            return RuleResult.Ok();
+
+        foreach (var reqItem in ctx.RequestedItems)
+        {
+            var contractItem = ctx.Contract.Items.FirstOrDefault(i => i.ProductId == reqItem.ProductId);
             
-        CreateWaybillContext ctx when ctx.RequestedQuantity > (ctx.Contract.Quantity - ctx.Contract.Waybills.Where(w => w.Status != WaybillStatus.Cancelled).Sum(w => w.ShippedQuantity)) 
-            => RuleResult.Failed($"Неможливо відвантажити {ctx.RequestedQuantity} шт. " +
-                                 $"Залишок (разом із чернетками): {ctx.Contract.Quantity - ctx.Contract.Waybills.Where(w => w.Status != WaybillStatus.Cancelled).Sum(w => w.ShippedQuantity)} шт."),
-            
-        _ => RuleResult.Ok()
-    };
+            if (contractItem == null)
+                return RuleResult.Failed($"Товар з ID {reqItem.ProductId} відсутній у цьому договорі.");
+
+            var alreadyShippedQty = ctx.Contract.Waybills
+                .Where(w => w.Status != WaybillStatus.Cancelled)
+                .SelectMany(w => w.Items)
+                .Where(i => i.ProductId == reqItem.ProductId)
+                .Sum(i => i.ShippedQuantity);
+
+            // 3. Перевіряємо залишок
+            if (reqItem.ShippedQuantity > contractItem.Quantity - alreadyShippedQty)
+            {
+                return RuleResult.Failed(
+                    $"Неможливо відвантажити {reqItem.ShippedQuantity} шт. " +
+                    $"Залишок за договором (разом із чернетками): {contractItem.Quantity - alreadyShippedQty} шт.");
+            }
+        }
+
+        return RuleResult.Ok();
+    }
 }

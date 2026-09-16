@@ -16,8 +16,9 @@ public class GetProductsByConsumerQueryHandler(IContractRepository contractRepos
             await contractRepository.GetContractsByConsumerIdWithProductsAsync(request.ConsumerId, cancellationToken);
 
         var result = contracts
-            .Select(c => c.Product)
-            .DistinctBy(p => p.Id) 
+            .SelectMany(c => c.Items)
+            .Select(i => i.Product)
+            .DistinctBy(p => p.Id)
             .Select(p => new ProductDto(p.Id, p.Code, p.Name, p.Price, p.PriceListNumber))
             .ToList();
 

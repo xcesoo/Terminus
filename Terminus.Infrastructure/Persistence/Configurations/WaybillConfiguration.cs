@@ -29,10 +29,22 @@ public class WaybillConfiguration : IEntityTypeConfiguration<Waybill>
         builder.Property(w => w.DispatchDate)
             .HasColumnName("dispatch_date")
             .HasDefaultValue(null);
+        
+        builder.OwnsMany(w => w.Items, ib =>
+        {
+            ib.ToTable("waybill_items");
+    
+            ib.WithOwner().HasForeignKey("waybill_id");
+            ib.HasKey("waybill_id", nameof(WaybillItem.ProductId));
 
-        builder.Property(w => w.ShippedQuantity)
-            .HasColumnName("shipped_quantity")
-            .IsRequired();
+            ib.Property(i => i.ShippedQuantity).HasColumnName("shipped_quantity").IsRequired();
+            ib.Property(i => i.ProductId).HasColumnName("product_id").IsRequired();
+
+            ib.HasOne(i => i.Product)
+                .WithMany()
+                .HasForeignKey(i => i.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
 
         builder.Property(w => w.ContractId)
             .HasColumnName("contract_id");

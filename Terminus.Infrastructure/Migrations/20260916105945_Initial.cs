@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Terminus.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddModelsConfiguration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,10 +46,9 @@ namespace Terminus.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     contract_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    conclusion_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    quantity = table.Column<int>(type: "integer", nullable: false),
-                    consumer_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    product_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    status = table.Column<string>(type: "text", nullable: false),
+                    conclusion_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    consumer_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,8 +59,27 @@ namespace Terminus.Infrastructure.Migrations
                         principalTable: "consumers",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "contract_items",
+                columns: table => new
+                {
+                    product_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    contract_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    quantity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_contract_items", x => new { x.contract_id, x.product_id });
                     table.ForeignKey(
-                        name: "FK_contracts_products_product_id",
+                        name: "FK_contract_items_contracts_contract_id",
+                        column: x => x.contract_id,
+                        principalTable: "contracts",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_contract_items_products_product_id",
                         column: x => x.product_id,
                         principalTable: "products",
                         principalColumn: "id",
@@ -74,8 +92,8 @@ namespace Terminus.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     waybill_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    dispatch_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    shipped_quantity = table.Column<int>(type: "integer", nullable: false),
+                    status = table.Column<string>(type: "text", nullable: false),
+                    dispatch_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     contract_id = table.Column<Guid>(type: "uuid", nullable: false),
                     transport_type = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
                     car_number = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
@@ -99,14 +117,44 @@ namespace Terminus.Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "waybill_items",
+                columns: table => new
+                {
+                    product_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    waybill_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    shipped_quantity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_waybill_items", x => new { x.waybill_id, x.product_id });
+                    table.ForeignKey(
+                        name: "FK_waybill_items_products_product_id",
+                        column: x => x.product_id,
+                        principalTable: "products",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_waybill_items_waybills_waybill_id",
+                        column: x => x.waybill_id,
+                        principalTable: "waybills",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_contract_items_product_id",
+                table: "contract_items",
+                column: "product_id");
+
             migrationBuilder.CreateIndex(
                 name: "IX_contracts_consumer_id",
                 table: "contracts",
                 column: "consumer_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_contracts_product_id",
-                table: "contracts",
+                name: "IX_waybill_items_product_id",
+                table: "waybill_items",
                 column: "product_id");
 
             migrationBuilder.CreateIndex(
@@ -119,6 +167,15 @@ namespace Terminus.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "contract_items");
+
+            migrationBuilder.DropTable(
+                name: "waybill_items");
+
+            migrationBuilder.DropTable(
+                name: "products");
+
+            migrationBuilder.DropTable(
                 name: "waybills");
 
             migrationBuilder.DropTable(
@@ -126,9 +183,6 @@ namespace Terminus.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "consumers");
-
-            migrationBuilder.DropTable(
-                name: "products");
         }
     }
 }

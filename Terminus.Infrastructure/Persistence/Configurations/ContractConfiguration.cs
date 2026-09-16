@@ -29,26 +29,33 @@ public class ContractConfiguration : IEntityTypeConfiguration<Contract>
         builder.Property(c => c.ConclusionDate)
             .HasColumnName("conclusion_date")
             .HasDefaultValue(null);
-
-        builder.Property(c => c.Quantity)
-            .HasColumnName("quantity")
-            .IsRequired();
+        
 
         builder.Property(c => c.ConsumerId)
             .HasColumnName("consumer_id");
-
-        builder.Property(c => c.ProductId)
-            .HasColumnName("product_id");
+        
         
         builder.HasOne(c => c.Consumer)
             .WithMany(c => c.Contracts)
             .HasForeignKey(c => c.ConsumerId)
             .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.OwnsMany(c => c.Items, ib =>
+        {
+            ib.ToTable("contract_items"); 
+    
+            ib.WithOwner().HasForeignKey("contract_id");
+    
+            ib.HasKey("contract_id", nameof(ContractItem.ProductId));
 
-        builder.HasOne(c => c.Product)
-            .WithMany(p => p.Contracts)
-            .HasForeignKey(c => c.ProductId)
-            .OnDelete(DeleteBehavior.Restrict);
+            ib.Property(i => i.Quantity).HasColumnName("quantity").IsRequired();
+            ib.Property(i => i.ProductId).HasColumnName("product_id").IsRequired();
+
+            ib.HasOne(i => i.Product)
+                .WithMany()
+                .HasForeignKey(i => i.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
 
         builder.Metadata
             .FindNavigation(nameof(Contract.Waybills))!

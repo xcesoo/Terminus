@@ -12,7 +12,13 @@ internal static class MappingExtensions
         new(product.Id, product.Code, product.Name, product.Price, product.PriceListNumber);
 
     public static ContractDto MapToDto(this Contract contract) =>
-        new(contract.Id, contract.ContractNumber, contract.ConsumerId, contract.ProductId, contract.Quantity, contract.ConclusionDate);
+        new(
+            contract.Id, 
+            contract.ContractNumber, 
+            contract.ConsumerId, 
+            contract.ConclusionDate,
+            contract.Items.Select(i => new ContractItemDto(i.ProductId, i.Quantity)).ToList()
+        );
     
     public static WaybillDto MapToDto(this Waybill waybill)
     {
@@ -27,12 +33,11 @@ internal static class MappingExtensions
         return new WaybillDto(
             WaybillNumber: waybill.WaybillNumber,
             DispatchDate: waybill.DispatchDate,
-            ProductName: waybill.Contract.Product.Name,
-            ShippedQuantity: waybill.ShippedQuantity,
             ConsumerName: waybill.Contract.Consumer.Name,
             TransportType: transportType,
             TransportDetails: details,
-            ServiceSum: sum
+            ServiceSum: sum,
+            Items: waybill.Items.Select(i => new WaybillItemDto(i.ProductId, i.ShippedQuantity)).ToList()
         );
     }
 }

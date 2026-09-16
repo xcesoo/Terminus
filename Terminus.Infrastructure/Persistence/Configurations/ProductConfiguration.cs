@@ -34,9 +34,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Price)
             .HasColumnName("price")
             .HasColumnType("numeric(18,2)");
-
-        builder.Metadata
-            .FindNavigation(nameof(Product.Contracts))!
-            .SetPropertyAccessMode(PropertyAccessMode.Field);
+        
     }
 }

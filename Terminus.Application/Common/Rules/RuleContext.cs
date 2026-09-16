@@ -5,12 +5,11 @@ namespace Terminus.Application.Common.Rules;
 
 public record CreateWaybillContext(
     Contract Contract, 
-    int RequestedQuantity) : IRuleContext;
+    IEnumerable<WaybillItem> RequestedItems) : IRuleContext;
 
 public record CreateContractContext(
     Consumer Consumer, 
-    Product Product, 
-    int Quantity) : IRuleContext;
+    IEnumerable<ContractItem> Items) : IRuleContext;
     
 public record SignContractContext(
     Contract Contract, 

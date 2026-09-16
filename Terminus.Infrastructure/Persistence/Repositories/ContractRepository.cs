@@ -7,7 +7,11 @@ namespace Terminus.Infrastructure.Persistence.Repositories;
 public class ContractRepository(TerminusDbContext dbContext) : IContractRepository
 {
     public Task<Contract?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
-        dbContext.Contracts.Include(c => c.Waybills).FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+        dbContext.Contracts
+            .Include(c => c.Items)
+            .Include(c => c.Waybills)
+            .ThenInclude(w => w.Items)
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
 
     public async Task<IReadOnlyCollection<Contract>> GetAllAsync(CancellationToken cancellationToken = default) =>
         await dbContext.Contracts.AsNoTracking().ToListAsync(cancellationToken);
@@ -22,8 +26,9 @@ public class ContractRepository(TerminusDbContext dbContext) : IContractReposito
     public async Task<IReadOnlyCollection<Contract>> GetContractsWithProductsAndConsumersAsync(CancellationToken cancellationToken = default) =>
         await dbContext.Contracts
             .AsNoTracking()
-            .Include(c => c.Product)
             .Include(c => c.Consumer)
+            .Include(c => c.Items)          
+            .ThenInclude(i => i.Product) 
             .ToListAsync(cancellationToken);
 
     // Задача 4: Сформувати список виробів для окремого споживача
@@ -31,6 +36,7 @@ public class ContractRepository(TerminusDbContext dbContext) : IContractReposito
         await dbContext.Contracts
             .AsNoTracking()
             .Where(c => c.ConsumerId == consumerId)
-            .Include(c => c.Product)
+            .Include(c => c.Items)
+            .ThenInclude(i => i.Product)
             .ToListAsync(cancellationToken);
 }

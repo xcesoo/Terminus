@@ -8,9 +8,6 @@ public class Product
     public decimal Price { get; private set; }
     public string PriceListNumber { get; private set; }
 
-    private readonly List<Contract> _contracts = new();
-    public IReadOnlyCollection<Contract> Contracts => _contracts.AsReadOnly();
-
     private Product() { }
 
     private Product(string code, string name, decimal price, string priceListNumber)

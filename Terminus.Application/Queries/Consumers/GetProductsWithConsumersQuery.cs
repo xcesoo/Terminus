@@ -14,10 +14,11 @@ public class GetProductsWithConsumersQueryHandler(IContractRepository contractRe
         var contracts = await contractRepository.GetContractsWithProductsAndConsumersAsync(cancellationToken);
 
         var result = contracts
-            .GroupBy(c => c.Product)
+            .SelectMany(c => c.Items.Select(i => new { c.Consumer, i.Product }))
+            .GroupBy(x => x.Product)
             .Select(g => new ProductWithConsumersDto(
                 ProductName: g.Key.Name,
-                ConsumerNames: g.Select(c => c.Consumer.Name).Distinct()
+                ConsumerNames: g.Select(x => x.Consumer.Name).Distinct()
             ))
             .ToList();
 

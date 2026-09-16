@@ -71,14 +71,6 @@ namespace Terminus.Infrastructure.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("contract_number");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("product_id");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer")
-                        .HasColumnName("quantity");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text")
@@ -87,8 +79,6 @@ namespace Terminus.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ConsumerId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("contracts", (string)null);
                 });
@@ -139,10 +129,6 @@ namespace Terminus.Infrastructure.Migrations
                     b.Property<DateTime?>("DispatchDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("dispatch_date");
-
-                    b.Property<int>("ShippedQuantity")
-                        .HasColumnType("integer")
-                        .HasColumnName("shipped_quantity");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -248,15 +234,40 @@ namespace Terminus.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Terminus.Domain.Entities.Product", "Product")
-                        .WithMany("Contracts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.OwnsMany("Terminus.Domain.Entities.ContractItem", "Items", b1 =>
+                        {
+                            b1.Property<Guid>("contract_id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("product_id");
+
+                            b1.Property<int>("Quantity")
+                                .HasColumnType("integer")
+                                .HasColumnName("quantity");
+
+                            b1.HasKey("contract_id", "ProductId");
+
+                            b1.HasIndex("ProductId");
+
+                            b1.ToTable("contract_items", (string)null);
+
+                            b1.HasOne("Terminus.Domain.Entities.Product", "Product")
+                                .WithMany()
+                                .HasForeignKey("ProductId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
+
+                            b1.WithOwner()
+                                .HasForeignKey("contract_id");
+
+                            b1.Navigation("Product");
+                        });
 
                     b.Navigation("Consumer");
 
-                    b.Navigation("Product");
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Terminus.Domain.Entities.Waybill", b =>
@@ -267,7 +278,40 @@ namespace Terminus.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.OwnsMany("Terminus.Domain.Entities.WaybillItem", "Items", b1 =>
+                        {
+                            b1.Property<Guid>("waybill_id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("product_id");
+
+                            b1.Property<int>("ShippedQuantity")
+                                .HasColumnType("integer")
+                                .HasColumnName("shipped_quantity");
+
+                            b1.HasKey("waybill_id", "ProductId");
+
+                            b1.HasIndex("ProductId");
+
+                            b1.ToTable("waybill_items", (string)null);
+
+                            b1.HasOne("Terminus.Domain.Entities.Product", "Product")
+                                .WithMany()
+                                .HasForeignKey("ProductId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
+
+                            b1.WithOwner()
+                                .HasForeignKey("waybill_id");
+
+                            b1.Navigation("Product");
+                        });
+
                     b.Navigation("Contract");
+
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Terminus.Domain.Entities.Consumer", b =>
@@ -278,11 +322,6 @@ namespace Terminus.Infrastructure.Migrations
             modelBuilder.Entity("Terminus.Domain.Entities.Contract", b =>
                 {
                     b.Navigation("Waybills");
-                });
-
-            modelBuilder.Entity("Terminus.Domain.Entities.Product", b =>
-                {
-                    b.Navigation("Contracts");
                 });
 #pragma warning restore 612, 618
         }
