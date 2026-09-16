@@ -8,15 +8,15 @@ using Terminus.Domain.Interfaces.Repositories;
 namespace Terminus.Application.Commands.Contracts;
 
 public readonly record struct CreateContractCommand(
-    string ContractNumber,
     Guid ConsumerId,
-    IEnumerable<ContractItemDto> Items) : IRequest<Guid>;
+    IEnumerable<ContractItemRequestDto> Items) : IRequest<Guid>; 
 
 public class CreateContractCommandHandler(
     IConsumerRepository consumerRepository,
     IContractRepository contractRepository,
     IRuleEngine ruleEngine,
-    IUnitOfWork unitOfWork) 
+    IUnitOfWork unitOfWork,
+    TimeProvider timeProvider) 
     : IRequestHandler<CreateContractCommand, Guid>
 {
     public async Task<Guid> Handle(CreateContractCommand request, CancellationToken cancellationToken)
@@ -31,7 +31,11 @@ public class CreateContractCommandHandler(
         if (!validationResult.IsSuccess)
             throw new InvalidOperationException(validationResult.ErrorMessage);
 
-        var contract = Contract.Create(request.ContractNumber, request.ConsumerId, contractItems);
+        var datePart = timeProvider.GetUtcNow().ToString("yyyyMMdd");
+        var randomLetters = new string(Enumerable.Range(0, 10).Select(_ => (char)Random.Shared.Next('A', 'Z' + 1)).ToArray());
+        var generatedContractNumber = $"CTR-{datePart}-{randomLetters}";
+
+        var contract = Contract.Create(generatedContractNumber, request.ConsumerId, contractItems);
         
         await contractRepository.AddAsync(contract, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

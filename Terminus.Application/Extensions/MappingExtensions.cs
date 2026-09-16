@@ -11,15 +11,26 @@ internal static class MappingExtensions
     public static ProductDto MapToDto(this Product product) =>
         new(product.Id, product.Code, product.Name, product.Price, product.PriceListNumber);
 
-    public static ContractDto MapToDto(this Contract contract) =>
-        new(
-            contract.Id, 
-            contract.ContractNumber, 
-            contract.Status,
-            contract.ConsumerId, 
-            contract.ConclusionDate,
-            contract.Items.Select(i => new ContractItemDto(i.ProductId, i.Quantity)).ToList()
+    public static ContractDto MapToDto(this Contract contract)
+    {
+        var mappedItems = contract.Items.Select(i => new ContractItemDto(
+            ProductId: i.ProductId,
+            ProductName: i.Product.Name,
+            Price: i.Product.Price,
+            Quantity: i.Quantity,
+            TotalPrice: i.Product.Price * i.Quantity
+        )).ToList();
+
+        return new ContractDto(
+            Id: contract.Id, 
+            ContractNumber: contract.ContractNumber, 
+            ConsumerId: contract.ConsumerId, 
+            Status: contract.Status.ToString(), 
+            ConclusionDate: contract.ConclusionDate,
+            Items: mappedItems,
+            TotalAmount: mappedItems.Sum(i => i.TotalPrice)
         );
+    }
     
     public static WaybillDto MapToDto(this Waybill waybill)
     {

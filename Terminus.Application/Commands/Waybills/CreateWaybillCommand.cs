@@ -10,8 +10,7 @@ namespace Terminus.Application.Commands.Waybills;
 
 public readonly record struct CreateWaybillCommand(
     Guid ContractId,
-    string WaybillNumber,
-    IEnumerable<WaybillItemRequestDto> Items,
+    IEnumerable<WaybillItemRequestDto> Items, 
     TransportType TransportType,
     string? TransportIdentifier, 
     string? ReceiptNumber,
@@ -22,7 +21,8 @@ public class CreateWaybillCommandHandler(
     IContractRepository contractRepository,
     IWaybillRepository waybillRepository,
     IUnitOfWork unitOfWork,
-    IRuleEngine ruleEngine)
+    IRuleEngine ruleEngine,
+    TimeProvider timeProvider) 
     : IRequestHandler<CreateWaybillCommand, Guid>
 {
     public async Task<Guid> Handle(CreateWaybillCommand request, CancellationToken cancellationToken)
@@ -40,21 +40,16 @@ public class CreateWaybillCommandHandler(
         if (!validationResult.IsSuccess)
             throw new InvalidOperationException(validationResult.ErrorMessage);
 
+        var datePart = timeProvider.GetUtcNow().ToString("yyyyMMdd");
+        var randomLetters = new string(Enumerable.Range(0, 10).Select(_ => (char)Random.Shared.Next('A', 'Z' + 1)).ToArray());
+        var generatedWaybillNumber = $"WB-{datePart}-{randomLetters}";
+
         Waybill waybill = request.TransportType switch
         {
-            TransportType.Auto => AutoWaybill.Create(
-                request.WaybillNumber, request.ContractId, 
-                request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum, waybillItems),
-                
-            TransportType.Train => TrainWaybill.Create(
-                request.WaybillNumber, request.ContractId, 
-                request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum, waybillItems),
-                
-            TransportType.Avia => AviaWaybill.Create(
-                request.WaybillNumber, request.ContractId, 
-                request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum, waybillItems),
-                
-            _ => throw new ArgumentException("Невідомий тип транспорту")
+            TransportType.Auto => AutoWaybill.Create(generatedWaybillNumber, request.ContractId, request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum, waybillItems),
+            TransportType.Train => TrainWaybill.Create(generatedWaybillNumber, request.ContractId, request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum, waybillItems),
+            TransportType.Avia => AviaWaybill.Create(generatedWaybillNumber, request.ContractId, request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum, waybillItems),
+            _ => throw new ArgumentOutOfRangeException(nameof(request.TransportType), "Невідомий тип транспорту")
         };
 
         await waybillRepository.AddAsync(waybill, cancellationToken);

@@ -15,6 +15,12 @@ public class ContractsController(ISender sender) : ControllerBase
         return Ok(await sender.Send(new GetAllContractsQuery(), token));
     }
 
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken token)
+    {
+        return Ok(await sender.Send(new GetContractByIdQuery(id), token));
+    }
+    
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateContractCommand command, CancellationToken token)
     {

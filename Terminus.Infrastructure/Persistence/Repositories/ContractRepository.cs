@@ -9,12 +9,17 @@ public class ContractRepository(TerminusDbContext dbContext) : IContractReposito
     public Task<Contract?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
         dbContext.Contracts
             .Include(c => c.Items)
+            .ThenInclude(i=> i.Product)
             .Include(c => c.Waybills)
             .ThenInclude(w => w.Items)
             .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
 
     public async Task<IReadOnlyCollection<Contract>> GetAllAsync(CancellationToken cancellationToken = default) =>
-        await dbContext.Contracts.AsNoTracking().ToListAsync(cancellationToken);
+        await dbContext.Contracts
+            .AsNoTracking()
+            .Include(c => c.Items)
+            .ThenInclude(i => i.Product) 
+            .ToListAsync(cancellationToken);
 
     public async Task AddAsync(Contract contract, CancellationToken cancellationToken = default) =>
         await dbContext.Contracts.AddAsync(contract, cancellationToken);
