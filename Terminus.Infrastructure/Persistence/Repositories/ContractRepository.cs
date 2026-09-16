@@ -20,6 +20,16 @@ public class ContractRepository(TerminusDbContext dbContext) : IContractReposito
             .Include(c => c.Items)
             .ThenInclude(i => i.Product) 
             .ToListAsync(cancellationToken);
+    
+    public async Task<IReadOnlyCollection<Contract>> SearchByNumberAsync(string searchTerm, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Contracts
+            .AsNoTracking()
+            .Include(c => c.Items).ThenInclude(i => i.Product)
+            .Where(c => EF.Functions.ILike(c.ContractNumber, $"%{searchTerm}%") || 
+                        EF.Functions.TrigramsAreSimilar(c.ContractNumber, searchTerm))
+            .ToListAsync(cancellationToken);
+    }
 
     public async Task AddAsync(Contract contract, CancellationToken cancellationToken = default) =>
         await dbContext.Contracts.AddAsync(contract, cancellationToken);

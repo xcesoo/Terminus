@@ -21,6 +21,12 @@ public class ContractsController(ISender sender) : ControllerBase
         return Ok(await sender.Send(new GetContractByIdQuery(id), token));
     }
     
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string term, CancellationToken token)
+    {
+        return Ok(await sender.Send(new SearchContractsQuery(term), token));
+    }
+    
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateContractCommand command, CancellationToken token)
     {

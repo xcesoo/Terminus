@@ -25,6 +25,10 @@ public class ContractConfiguration : IEntityTypeConfiguration<Contract>
             .HasColumnName("contract_number")
             .IsRequired()
             .HasMaxLength(100);
+        
+        builder.HasIndex(c => c.ContractNumber)
+            .HasMethod("gin")
+            .HasOperators("gin_trgm_ops");
 
         builder.Property(c => c.ConclusionDate)
             .HasColumnName("conclusion_date")

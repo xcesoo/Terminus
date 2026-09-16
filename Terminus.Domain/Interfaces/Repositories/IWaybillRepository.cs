@@ -7,6 +7,10 @@ public interface IWaybillRepository
     //base crud operations
     Task<Waybill?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<IReadOnlyCollection<Waybill>> GetAllAsync(CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<Waybill>> SearchByNumberAsync(string searchTerm,
+        CancellationToken cancellationToken = default);
+
     Task AddAsync(Waybill waybill, CancellationToken cancellationToken = default);
     Task DeleteAsync(Waybill waybill, CancellationToken cancellationToken = default);
 

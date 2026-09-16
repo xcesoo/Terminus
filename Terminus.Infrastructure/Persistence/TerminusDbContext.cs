@@ -17,7 +17,7 @@ public class TerminusDbContext : DbContext, IUnitOfWork
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ConsumerConfiguration).Assembly);
-        
+        modelBuilder.HasPostgresExtension("pg_trgm");
         base.OnModelCreating(modelBuilder);
     }
 }

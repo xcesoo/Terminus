@@ -7,6 +7,10 @@ public interface IContractRepository
     //base crud operations
     Task<Contract?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<IReadOnlyCollection<Contract>> GetAllAsync(CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<Contract>> SearchByNumberAsync(string searchTerm,
+        CancellationToken cancellationToken = default);
+
     Task AddAsync(Contract contract, CancellationToken cancellationToken = default);
     Task DeleteAsync(Contract contract, CancellationToken cancellationToken = default);
 

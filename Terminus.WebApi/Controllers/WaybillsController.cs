@@ -14,7 +14,19 @@ public class WaybillsController(ISender sender) : ControllerBase
     {
         return Ok(await sender.Send(new GetAllWaybillsQuery(), token));
     }
-
+    
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken token)
+    {
+        return Ok(await sender.Send(new GetWaybillByIdQuery(id), token));
+    }
+    
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string term, CancellationToken token)
+    {
+        return Ok(await sender.Send(new SearchWaybillsQuery(term), token));
+    }
+    
     [HttpGet("daily")]
     public async Task<IActionResult> GetDaily([FromQuery] DateTime date, CancellationToken token) 
     {

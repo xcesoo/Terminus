@@ -22,6 +22,17 @@ public class WaybillRepository(TerminusDbContext dbContext) : IWaybillRepository
             .Include(w => w.Contract)
             .ThenInclude(c => c.Consumer)
             .ToListAsync(cancellationToken);
+    
+    public async Task<IReadOnlyCollection<Waybill>> SearchByNumberAsync(string searchTerm, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Waybills
+            .AsNoTracking()
+            .Include(w => w.Items).ThenInclude(i => i.Product)
+            .Include(w => w.Contract).ThenInclude(c => c.Consumer)
+            .Where(w => EF.Functions.ILike(w.WaybillNumber, $"%{searchTerm}%") || 
+                        EF.Functions.TrigramsAreSimilar(w.WaybillNumber, searchTerm))
+            .ToListAsync(cancellationToken);
+    }
 
     public async Task AddAsync(Waybill waybill, CancellationToken cancellationToken = default) =>
         await dbContext.Waybills.AddAsync(waybill, cancellationToken);
