@@ -20,13 +20,17 @@ public class SignContractCommandHandler(
         var contract = await contractRepository.GetByIdAsync(request.ContractId, cancellationToken)
                        ?? throw new KeyNotFoundException("Договір не знайдено.");
 
-        var context = new SignContractContext(contract, request.ConclusionDate);
+        var utcDate = request.ConclusionDate.Kind == DateTimeKind.Unspecified 
+            ? DateTime.SpecifyKind(request.ConclusionDate, DateTimeKind.Utc) 
+            : request.ConclusionDate.ToUniversalTime();
+
+        var context = new SignContractContext(contract, utcDate);
 
         var validationResult = ruleEngine.Verify(context);
         if (!validationResult.IsSuccess)
             throw new InvalidOperationException(validationResult.ErrorMessage);
 
-        contract.Sign(request.ConclusionDate);
+        contract.Sign(utcDate);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }

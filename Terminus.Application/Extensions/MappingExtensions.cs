@@ -15,6 +15,7 @@ internal static class MappingExtensions
         new(
             contract.Id, 
             contract.ContractNumber, 
+            contract.Status,
             contract.ConsumerId, 
             contract.ConclusionDate,
             contract.Items.Select(i => new ContractItemDto(i.ProductId, i.Quantity)).ToList()
@@ -45,6 +46,7 @@ internal static class MappingExtensions
             Id: waybill.Id,
             WaybillNumber: waybill.WaybillNumber,
             DispatchDate: waybill.DispatchDate,
+            Status: waybill.Status,
             ConsumerName: waybill.Contract.Consumer.Name,
             ConsumerAddress: waybill.Contract.Consumer.Address,
             ConsumerBankAccount: waybill.Contract.Consumer.BankAccount,

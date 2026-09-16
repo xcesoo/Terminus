@@ -20,6 +20,18 @@ public class GlobalExceptionsHandler(ILogger<GlobalExceptionsHandler> logger) : 
                 problemDetails.Detail = exception.Message;
                 break;
             
+            case InvalidOperationException:
+                problemDetails.Status = StatusCodes.Status400BadRequest;
+                problemDetails.Title = "Invalid operation";
+                problemDetails.Detail = exception.Message;
+                break;
+            
+            case ArgumentException:
+                problemDetails.Status = StatusCodes.Status400BadRequest;
+                problemDetails.Title = "Invalid argument";
+                problemDetails.Detail = exception.Message;
+                break;
+            
             default:
                 logger.LogError(
                     exception,

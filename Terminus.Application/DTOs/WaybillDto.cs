@@ -1,9 +1,12 @@
+using Terminus.Domain.Enums;
+
 namespace Terminus.Application.DTOs;
 
 public record WaybillDto(
     Guid Id,
     string WaybillNumber,
     DateTime? DispatchDate,
+    WaybillStatus Status,
     
     string ConsumerName,
     string ConsumerAddress,

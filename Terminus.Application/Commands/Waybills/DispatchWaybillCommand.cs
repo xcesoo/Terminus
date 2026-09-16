@@ -20,13 +20,17 @@ public class DispatchWaybillCommandHandler(
         var waybill = await waybillRepository.GetByIdAsync(request.WaybillId, cancellationToken)
                       ?? throw new KeyNotFoundException("ТТН не знайдено.");
 
-        var context = new DispatchWaybillContext(waybill.Contract, request.DispatchDate);
+        var utcDate = request.DispatchDate.Kind == DateTimeKind.Unspecified 
+            ? DateTime.SpecifyKind(request.DispatchDate, DateTimeKind.Utc) 
+            : request.DispatchDate.ToUniversalTime();
+
+        var context = new DispatchWaybillContext(waybill.Contract, utcDate);
 
         var validationResult = ruleEngine.Verify(context);
         if (!validationResult.IsSuccess)
             throw new InvalidOperationException(validationResult.ErrorMessage);
 
-        waybill.Dispatch(request.DispatchDate);
+        waybill.Dispatch(utcDate);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }

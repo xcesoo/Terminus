@@ -12,10 +12,11 @@ public class GetMonthlyWaybillsQueryHandler(IWaybillRepository waybillRepository
 {
     public async Task<IReadOnlyCollection<WaybillDto>> Handle(GetMonthlyWaybillsQuery request, CancellationToken cancellationToken)
     {
-        var startDate = new DateTime(request.Year, request.Month, 1);
-        var endDate = startDate.AddMonths(1).AddDays(-1);
+        var startDate = new DateTime(request.Year, request.Month, 1, 0, 0, 0, DateTimeKind.Utc);
+        var daysInMonth = DateTime.DaysInMonth(request.Year, request.Month);
+        var endDate = new DateTime(request.Year, request.Month, daysInMonth, 0, 0, 0, DateTimeKind.Utc);
 
         var waybills = await waybillRepository.GetWaybillsByPeriodAsync(startDate, endDate, cancellationToken);
-        return waybills.Select(w=> w.MapToDto()).ToList().AsReadOnly();
+        return waybills.Select(w => w.MapToDto()).ToList().AsReadOnly();
     }
 }

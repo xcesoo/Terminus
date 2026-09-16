@@ -16,15 +16,15 @@ public class WaybillsController(ISender sender) : ControllerBase
     }
 
     [HttpGet("daily")]
-    public async Task<IActionResult> GetDaily([FromQuery] GetDailyWaybillsQuery query, CancellationToken token)
+    public async Task<IActionResult> GetDaily([FromQuery] DateTime date, CancellationToken token) 
     {
-        return Ok(await sender.Send(query, token));
+        return Ok(await sender.Send(new GetDailyWaybillsQuery(date), token)); 
     }
 
     [HttpGet("monthly")]
-    public async Task<IActionResult> GetMonthly([FromQuery] GetMonthlyWaybillsQuery query, CancellationToken token)
+    public async Task<IActionResult> GetMonthly([FromQuery] int year, [FromQuery] int month, CancellationToken token) 
     {
-        return Ok(await sender.Send(query, token));
+        return Ok(await sender.Send(new GetMonthlyWaybillsQuery(year, month), token)); 
     }
 
     [HttpPost]

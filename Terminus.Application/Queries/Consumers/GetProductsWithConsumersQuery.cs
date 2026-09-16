@@ -15,9 +15,9 @@ public class GetProductsWithConsumersQueryHandler(IContractRepository contractRe
 
         var result = contracts
             .SelectMany(c => c.Items.Select(i => new { c.Consumer, i.Product }))
-            .GroupBy(x => x.Product)
+            .GroupBy(x => x.Product.Id)
             .Select(g => new ProductWithConsumersDto(
-                ProductName: g.Key.Name,
+                ProductName: g.First().Product.Name,
                 ConsumerNames: g.Select(x => x.Consumer.Name).Distinct()
             ))
             .ToList();

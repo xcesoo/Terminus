@@ -11,7 +11,7 @@ namespace Terminus.Application.Commands.Waybills;
 public readonly record struct CreateWaybillCommand(
     Guid ContractId,
     string WaybillNumber,
-    IEnumerable<WaybillItemDto> Items, 
+    IEnumerable<WaybillItemRequestDto> Items,
     TransportType TransportType,
     string? TransportIdentifier, 
     string? ReceiptNumber,
@@ -54,7 +54,7 @@ public class CreateWaybillCommandHandler(
                 request.WaybillNumber, request.ContractId, 
                 request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum, waybillItems),
                 
-            _ => throw new ArgumentOutOfRangeException(nameof(request.TransportType), "Невідомий тип транспорту")
+            _ => throw new ArgumentException("Невідомий тип транспорту")
         };
 
         await waybillRepository.AddAsync(waybill, cancellationToken);

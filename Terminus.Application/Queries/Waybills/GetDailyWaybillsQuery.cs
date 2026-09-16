@@ -12,7 +12,11 @@ public class GetDailyWaybillsQueryHandler(IWaybillRepository waybillRepository)
 {
     public async Task<IReadOnlyCollection<WaybillDto>> Handle(GetDailyWaybillsQuery request, CancellationToken cancellationToken)
     {
-        var waybills = await waybillRepository.GetWaybillsByDateAsync(request.Date, cancellationToken);
+        var utcDate = request.Date.Kind == DateTimeKind.Unspecified 
+            ? DateTime.SpecifyKind(request.Date, DateTimeKind.Utc) 
+            : request.Date.ToUniversalTime();
+
+        var waybills = await waybillRepository.GetWaybillsByDateAsync(utcDate, cancellationToken);
         return waybills.Select(w => w.MapToDto()).ToList().AsReadOnly();
     }
 }
