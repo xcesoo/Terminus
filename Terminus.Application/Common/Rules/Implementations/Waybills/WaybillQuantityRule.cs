@@ -23,7 +23,6 @@ public class WaybillQuantityRule : IBusinessRule
                 .Where(i => i.ProductId == reqItem.ProductId)
                 .Sum(i => i.ShippedQuantity);
 
-            // 3. Перевіряємо залишок
             if (reqItem.ShippedQuantity > contractItem.Quantity - alreadyShippedQty)
             {
                 return RuleResult.Failed(

@@ -1,3 +1,20 @@
 namespace Terminus.Application.DTOs;
 
-public record WaybillDto(string WaybillNumber, DateTime? DispatchDate, string ConsumerName, string TransportType, string TransportDetails, decimal ServiceSum, IEnumerable<WaybillItemDto> Items);
+public record WaybillDto(
+    Guid Id,
+    string WaybillNumber,
+    DateTime? DispatchDate,
+    
+    string ConsumerName,
+    string ConsumerAddress,
+    string ConsumerBankAccount,
+    
+    string TransportType,
+    string TransportDetails,
+    
+    IEnumerable<WaybillItemDto> Items,
+    
+    decimal ProductsTotalSum,    
+    decimal TransportServiceSum, 
+    decimal TotalAmount          
+);

@@ -22,22 +22,38 @@ internal static class MappingExtensions
     
     public static WaybillDto MapToDto(this Waybill waybill)
     {
-        var (transportType, details, sum) = waybill switch
+        var (transportType, details, transportSum) = waybill switch
         {
             AutoWaybill auto => ("Автомобіль", $"Авто: {auto.CarNumber}, Лист: {auto.RouteSheetNumber}", auto.AutoServiceSum),
             TrainWaybill train => ("Залізниця", $"Вагон: {train.ContainerNumber}, Квитанція: {train.RailwayReceiptNumber}", train.TrainServiceSum),
             AviaWaybill avia => ("Авіа", $"Рейс: {avia.FlightNumber}, Квитанція: {avia.AviaReceiptNumber}", avia.AviaServiceSum),
             _ => ("Невідомо", "Невідомо", 0m)
         };
+        
+        var mappedItems = waybill.Items.Select(i => new WaybillItemDto(
+            ProductId: i.ProductId,
+            ProductName: i.Product.Name,
+            Price: i.Product.Price,
+            ShippedQuantity: i.ShippedQuantity,
+            TotalPrice: i.Product.Price * i.ShippedQuantity
+        )).ToList();
+
+        var productsTotalSum = mappedItems.Sum(i => i.TotalPrice);
+        var totalAmount = productsTotalSum + transportSum; 
 
         return new WaybillDto(
+            Id: waybill.Id,
             WaybillNumber: waybill.WaybillNumber,
             DispatchDate: waybill.DispatchDate,
             ConsumerName: waybill.Contract.Consumer.Name,
+            ConsumerAddress: waybill.Contract.Consumer.Address,
+            ConsumerBankAccount: waybill.Contract.Consumer.BankAccount,
             TransportType: transportType,
             TransportDetails: details,
-            ServiceSum: sum,
-            Items: waybill.Items.Select(i => new WaybillItemDto(i.ProductId, i.ShippedQuantity)).ToList()
+            Items: mappedItems,
+            ProductsTotalSum: productsTotalSum,
+            TransportServiceSum: transportSum,
+            TotalAmount: totalAmount
         );
     }
 }
