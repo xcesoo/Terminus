@@ -3,6 +3,7 @@ using Terminus.Application.Common.Rules;
 using Terminus.Application.Common.Rules.Interfaces;
 using Terminus.Application.DTOs;
 using Terminus.Domain.Entities;
+using Terminus.Domain.Interfaces;
 using Terminus.Domain.Interfaces.Repositories;
 
 namespace Terminus.Application.Commands.Contracts;
@@ -16,7 +17,7 @@ public class CreateContractCommandHandler(
     IContractRepository contractRepository,
     IRuleEngine ruleEngine,
     IUnitOfWork unitOfWork,
-    TimeProvider timeProvider) 
+    IDocumentNumberGenerator documentNumberGenerator)
     : IRequestHandler<CreateContractCommand, Guid>
 {
     public async Task<Guid> Handle(CreateContractCommand request, CancellationToken cancellationToken)
@@ -31,9 +32,7 @@ public class CreateContractCommandHandler(
         if (!validationResult.IsSuccess)
             throw new InvalidOperationException(validationResult.ErrorMessage);
 
-        var datePart = timeProvider.GetUtcNow().ToString("yyyyMMdd");
-        var randomLetters = new string(Enumerable.Range(0, 10).Select(_ => (char)Random.Shared.Next('A', 'Z' + 1)).ToArray());
-        var generatedContractNumber = $"CTR-{datePart}-{randomLetters}";
+        var generatedContractNumber = documentNumberGenerator.GenerateContractNumber();
 
         var contract = Contract.Create(generatedContractNumber, request.ConsumerId, contractItems);
         

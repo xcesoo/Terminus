@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 using Terminus.Application;
+using Terminus.Domain.Interfaces;
+using Terminus.Domain.Services;
 using Terminus.Infrastructure;
 using Terminus.Infrastructure.Extensions;
 using Terminus.WebApi.Middlewares;
@@ -19,6 +21,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddSingleton<IDocumentNumberGenerator, DocumentNumberGenerator>();
+builder.Services.AddSingleton<IDeliveryCalculatorService, DeliveryCalculatorService>();
 
 var app = builder.Build();
 

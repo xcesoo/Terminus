@@ -4,6 +4,7 @@ using Terminus.Application.Common.Rules.Interfaces;
 using Terminus.Application.DTOs;
 using Terminus.Domain.Entities;
 using Terminus.Domain.Enums;
+using Terminus.Domain.Interfaces;
 using Terminus.Domain.Interfaces.Repositories;
 
 namespace Terminus.Application.Commands.Waybills;
@@ -13,8 +14,7 @@ public readonly record struct CreateWaybillCommand(
     IEnumerable<WaybillItemRequestDto> Items, 
     TransportType TransportType,
     string? TransportIdentifier, 
-    string? ReceiptNumber,
-    decimal ServiceSum
+    string? ReceiptNumber
 ) : IRequest<Guid>;
 
 public class CreateWaybillCommandHandler(
@@ -22,7 +22,8 @@ public class CreateWaybillCommandHandler(
     IWaybillRepository waybillRepository,
     IUnitOfWork unitOfWork,
     IRuleEngine ruleEngine,
-    TimeProvider timeProvider) 
+    IDeliveryCalculatorService deliveryCalculator,
+    IDocumentNumberGenerator documentNumberGenerator)
     : IRequestHandler<CreateWaybillCommand, Guid>
 {
     public async Task<Guid> Handle(CreateWaybillCommand request, CancellationToken cancellationToken)
@@ -35,20 +36,23 @@ public class CreateWaybillCommandHandler(
             .ToList();
 
         var context = new CreateWaybillContext(contract, waybillItems);
-
         var validationResult = ruleEngine.Verify(context);
         if (!validationResult.IsSuccess)
             throw new InvalidOperationException(validationResult.ErrorMessage);
 
-        var datePart = timeProvider.GetUtcNow().ToString("yyyyMMdd");
-        var randomLetters = new string(Enumerable.Range(0, 10).Select(_ => (char)Random.Shared.Next('A', 'Z' + 1)).ToArray());
-        var generatedWaybillNumber = $"WB-{datePart}-{randomLetters}";
+        var totalQuantity = waybillItems.Sum(i => i.ShippedQuantity);
+        decimal declaredValue = waybillItems.Sum(item => 
+            contract.Items.First(ci => ci.ProductId == item.ProductId).Product.Price * item.ShippedQuantity);
+
+        decimal serviceSum = deliveryCalculator.Calculate(request.TransportType, totalQuantity, declaredValue);
+
+        var generatedWaybillNumber = documentNumberGenerator.GenerateWaybillNumber();
 
         Waybill waybill = request.TransportType switch
         {
-            TransportType.Auto => AutoWaybill.Create(generatedWaybillNumber, request.ContractId, request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum, waybillItems),
-            TransportType.Train => TrainWaybill.Create(generatedWaybillNumber, request.ContractId, request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum, waybillItems),
-            TransportType.Avia => AviaWaybill.Create(generatedWaybillNumber, request.ContractId, request.TransportIdentifier!, request.ReceiptNumber!, request.ServiceSum, waybillItems),
+            TransportType.Auto => AutoWaybill.Create(generatedWaybillNumber, request.ContractId, request.TransportIdentifier!, request.ReceiptNumber!, serviceSum, waybillItems),
+            TransportType.Train => TrainWaybill.Create(generatedWaybillNumber, request.ContractId, request.TransportIdentifier!, request.ReceiptNumber!, serviceSum, waybillItems),
+            TransportType.Avia => AviaWaybill.Create(generatedWaybillNumber, request.ContractId, request.TransportIdentifier!, request.ReceiptNumber!, serviceSum, waybillItems),
             _ => throw new ArgumentOutOfRangeException(nameof(request.TransportType), "Невідомий тип транспорту")
         };
 
