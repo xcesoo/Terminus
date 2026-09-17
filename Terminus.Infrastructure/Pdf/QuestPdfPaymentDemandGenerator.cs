@@ -172,9 +172,6 @@ private void ComposeContent(IContainer container)
 
     private void ComposeDeliveryBreakdown(IContainer container)
     {
-        // Усі три значення — знімок параметрів на момент створення ТТН (Waybill.DeliveryBaseCost/…),
-        // а не поточний appsettings. Тому таблиця завжди самоузгоджена з "Транспортні послуги" нижче,
-        // навіть якщо тарифи чи ціни товарів згодом зміняться.
         var totalQuantity = waybill.Items.Sum(i => i.ShippedQuantity);
         var basePricePerItem = totalQuantity > 0 ? waybill.DeliveryBaseCost / totalQuantity : 0m;
         var commissionRate = waybill.ProductsTotalSum > 0 ? waybill.DeliveryCommissionCost / waybill.ProductsTotalSum : 0m;

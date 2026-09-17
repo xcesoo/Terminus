@@ -38,8 +38,11 @@ public class WaybillRepository(TerminusDbContext dbContext) : IWaybillRepository
     public async Task AddAsync(Waybill waybill, CancellationToken cancellationToken = default) =>
         await dbContext.Waybills.AddAsync(waybill, cancellationToken);
 
-    public async Task DeleteAsync(Waybill waybill, CancellationToken cancellationToken = default) =>
-        await dbContext.Waybills.Where(w => w.Id == waybill.Id).ExecuteDeleteAsync(cancellationToken);
+    public Task DeleteAsync(Waybill waybill, CancellationToken cancellationToken = default)
+    {
+        dbContext.Waybills.Remove(waybill);
+        return Task.CompletedTask;
+    }
 
     // Задача 2: Раздрукувати відомості відвантаження виробів за добу
     public async Task<IReadOnlyCollection<Waybill>> GetWaybillsByDateAsync(DateTime dispatchDate, CancellationToken cancellationToken = default)

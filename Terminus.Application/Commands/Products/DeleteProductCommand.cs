@@ -5,7 +5,7 @@ namespace Terminus.Application.Commands.Products;
 
 public readonly record struct DeleteProductCommand(Guid Id) : IRequest;
 
-public class DeleteProductCommandHandler(IProductRepository productRepository) 
+public class DeleteProductCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork)
     : IRequestHandler<DeleteProductCommand>
 {
     public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
@@ -14,5 +14,6 @@ public class DeleteProductCommandHandler(IProductRepository productRepository)
             ?? throw new KeyNotFoundException("Виріб не знайдено.");
 
         await productRepository.DeleteAsync(product, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

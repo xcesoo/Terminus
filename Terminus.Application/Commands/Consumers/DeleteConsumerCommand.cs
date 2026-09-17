@@ -5,7 +5,7 @@ namespace Terminus.Application.Commands.Consumers;
 
 public readonly record struct DeleteConsumerCommand(Guid Id) : IRequest;
 
-public class DeleteConsumerCommandHandler(IConsumerRepository consumerRepository) 
+public class DeleteConsumerCommandHandler(IConsumerRepository consumerRepository, IUnitOfWork unitOfWork)
     : IRequestHandler<DeleteConsumerCommand>
 {
     public async Task Handle(DeleteConsumerCommand request, CancellationToken cancellationToken)
@@ -14,5 +14,6 @@ public class DeleteConsumerCommandHandler(IConsumerRepository consumerRepository
             ?? throw new KeyNotFoundException("Споживача не знайдено.");
 
         await consumerRepository.DeleteAsync(consumer, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

@@ -34,8 +34,11 @@ public class ContractRepository(TerminusDbContext dbContext) : IContractReposito
     public async Task AddAsync(Contract contract, CancellationToken cancellationToken = default) =>
         await dbContext.Contracts.AddAsync(contract, cancellationToken);
 
-    public async Task DeleteAsync(Contract contract, CancellationToken cancellationToken = default) =>
-        await dbContext.Contracts.Where(c => c.Id == contract.Id).ExecuteDeleteAsync(cancellationToken);
+    public Task DeleteAsync(Contract contract, CancellationToken cancellationToken = default)
+    {
+        dbContext.Contracts.Remove(contract);
+        return Task.CompletedTask;
+    }
 
     // Задача 1: Формування списку виробів і їхніх споживачів
     public async Task<IReadOnlyCollection<Contract>> GetContractsWithProductsAndConsumersAsync(CancellationToken cancellationToken = default) =>

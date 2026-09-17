@@ -15,6 +15,9 @@ public class ConsumerRepository(TerminusDbContext dbContext) : IConsumerReposito
     public async Task AddAsync(Consumer consumer, CancellationToken cancellationToken = default) =>
         await dbContext.Consumers.AddAsync(consumer, cancellationToken);
     
-    public async Task DeleteAsync(Consumer consumer, CancellationToken cancellationToken = default) =>
-        await dbContext.Consumers.Where(c => c.Id == consumer.Id).ExecuteDeleteAsync(cancellationToken);
+    public Task DeleteAsync(Consumer consumer, CancellationToken cancellationToken = default)
+    {
+        dbContext.Consumers.Remove(consumer);
+        return Task.CompletedTask;
+    }
 }

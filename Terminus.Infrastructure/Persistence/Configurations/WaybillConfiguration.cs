@@ -26,9 +26,12 @@ public class WaybillConfiguration : IEntityTypeConfiguration<Waybill>
             .IsRequired()
             .HasMaxLength(100);
         
-        builder.HasIndex(w => w.WaybillNumber)
+        builder.HasIndex(w => w.WaybillNumber, "ix_waybills_waybill_number_trgm")
             .HasMethod("gin")
             .HasOperators("gin_trgm_ops");
+
+        builder.HasIndex(w => w.WaybillNumber, "ix_waybills_waybill_number_unique")
+            .IsUnique();
 
         builder.Property(w => w.DispatchDate)
             .HasColumnName("dispatch_date")

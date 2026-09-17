@@ -17,9 +17,10 @@ public class CreateProductCommandHandler(
 {
     public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        var exist = await productRepository.GetByCodeAsync(request.Code, cancellationToken)
-            ?? throw new ArgumentException("Виріб з таким кодом вже існує.");
-        
+        var exist = await productRepository.GetByCodeAsync(request.Code, cancellationToken);
+        if (exist is not null)
+            throw new InvalidOperationException("Виріб з таким кодом вже існує.");
+
         var product = Product.Create(request.Code, request.Name, request.Price, request.PriceListNumber);
         
         await productRepository.AddAsync(product, cancellationToken);
