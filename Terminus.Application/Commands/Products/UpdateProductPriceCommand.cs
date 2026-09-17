@@ -16,8 +16,8 @@ public class UpdateProductPriceCommandHandler(
 {
     public async Task Handle(UpdateProductPriceCommand request, CancellationToken cancellationToken)
     {
-        var product = await productRepository.GetByIdAsync(request.Id, cancellationToken);
-        if (product == null) throw new ArgumentException("Виріб не знайдено.");
+        var product = await productRepository.GetByIdAsync(request.Id, cancellationToken)
+            ?? throw new KeyNotFoundException("Виріб не знайдено.");
 
         var effectiveDate = timeProvider.GetUtcNow().UtcDateTime;
 
