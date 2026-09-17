@@ -10,8 +10,9 @@ public class WaybillRepository(TerminusDbContext dbContext) : IWaybillRepository
     public Task<Waybill?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
         dbContext.Waybills
             .Include(w => w.Items)
+            .ThenInclude(i => i.Product)
             .Include(w => w.Contract)
-            .ThenInclude(c => c.Items)
+            .ThenInclude(c => c.Consumer)
             .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
 
     public async Task<IReadOnlyCollection<Waybill>> GetAllAsync(CancellationToken cancellationToken = default) =>

@@ -1,8 +1,9 @@
 using Terminus.Domain.Enums;
+using Terminus.Domain.ValueObjects;
 
 namespace Terminus.Domain.Interfaces;
 
 public interface IDeliveryCalculatorService
 {
-    decimal Calculate(TransportType transportType, int totalItemsQuantity, decimal declaredValue);
+    DeliveryCostBreakdown Calculate(TransportType transportType, int totalItemsQuantity, decimal declaredValue);
 }

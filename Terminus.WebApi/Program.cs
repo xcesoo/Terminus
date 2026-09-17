@@ -22,7 +22,6 @@ builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddSingleton<IDocumentNumberGenerator, DocumentNumberGenerator>();
-builder.Services.AddSingleton<IDeliveryCalculatorService, DeliveryCalculatorService>();
 
 var app = builder.Build();
 

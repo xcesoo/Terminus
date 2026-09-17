@@ -12,12 +12,17 @@ public record WaybillDto(
     string ConsumerAddress,
     string ConsumerBankAccount,
     
+    TransportType TransportTypeCode,
     string TransportType,
     string TransportDetails,
     
     IEnumerable<WaybillItemDto> Items,
-    
-    decimal ProductsTotalSum,    
-    decimal TransportServiceSum, 
-    decimal TotalAmount          
+
+    decimal ProductsTotalSum,
+    decimal TransportServiceSum,
+    decimal TotalAmount,
+
+    decimal DeliveryBaseCost,
+    decimal DeliveryCommissionCost,
+    decimal DeliveryTransportMultiplier
 );

@@ -33,16 +33,29 @@ public class WaybillConfiguration : IEntityTypeConfiguration<Waybill>
         builder.Property(w => w.DispatchDate)
             .HasColumnName("dispatch_date")
             .HasDefaultValue(null);
-        
+
+        builder.Property(w => w.DeliveryBaseCost)
+            .HasColumnName("delivery_base_cost")
+            .HasColumnType("numeric(18,2)");
+
+        builder.Property(w => w.DeliveryCommissionCost)
+            .HasColumnName("delivery_commission_cost")
+            .HasColumnType("numeric(18,2)");
+
+        builder.Property(w => w.DeliveryTransportMultiplier)
+            .HasColumnName("delivery_transport_multiplier")
+            .HasColumnType("numeric(18,4)");
+
         builder.OwnsMany(w => w.Items, ib =>
         {
             ib.ToTable("waybill_items");
-    
+
             ib.WithOwner().HasForeignKey("waybill_id");
             ib.HasKey("waybill_id", nameof(WaybillItem.ProductId));
 
             ib.Property(i => i.ShippedQuantity).HasColumnName("shipped_quantity").IsRequired();
             ib.Property(i => i.ProductId).HasColumnName("product_id").IsRequired();
+            ib.Property(i => i.Price).HasColumnName("price").HasColumnType("numeric(18,2)").IsRequired();
 
             ib.HasOne(i => i.Product)
                 .WithMany()

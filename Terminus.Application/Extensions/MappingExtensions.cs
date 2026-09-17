@@ -1,5 +1,6 @@
 using Terminus.Application.DTOs;
 using Terminus.Domain.Entities;
+using Terminus.Domain.Enums;
 
 namespace Terminus.Application.Extensions;
 
@@ -34,20 +35,20 @@ internal static class MappingExtensions
     
     public static WaybillDto MapToDto(this Waybill waybill)
     {
-        var (transportType, details, transportSum) = waybill switch
+        var (transportTypeCode, transportType, details, transportSum) = waybill switch
         {
-            AutoWaybill auto => ("Автомобіль", $"Авто: {auto.CarNumber}, Лист: {auto.RouteSheetNumber}", auto.AutoServiceSum),
-            TrainWaybill train => ("Залізниця", $"Вагон: {train.ContainerNumber}, Квитанція: {train.RailwayReceiptNumber}", train.TrainServiceSum),
-            AviaWaybill avia => ("Авіа", $"Рейс: {avia.FlightNumber}, Квитанція: {avia.AviaReceiptNumber}", avia.AviaServiceSum),
-            _ => ("Невідомо", "Невідомо", 0m)
+            AutoWaybill auto => (TransportType.Auto, "Автомобіль", $"Авто: {auto.CarNumber}, Лист: {auto.RouteSheetNumber}", auto.AutoServiceSum),
+            TrainWaybill train => (TransportType.Train, "Залізниця", $"Вагон: {train.ContainerNumber}, Квитанція: {train.RailwayReceiptNumber}", train.TrainServiceSum),
+            AviaWaybill avia => (TransportType.Avia, "Авіа", $"Рейс: {avia.FlightNumber}, Квитанція: {avia.AviaReceiptNumber}", avia.AviaServiceSum),
+            _ => throw new ArgumentOutOfRangeException(nameof(waybill), "Невідомий тип ТТН")
         };
         
         var mappedItems = waybill.Items.Select(i => new WaybillItemDto(
             ProductId: i.ProductId,
             ProductName: i.Product.Name,
-            Price: i.Product.Price,
+            Price: i.Price,
             ShippedQuantity: i.ShippedQuantity,
-            TotalPrice: i.Product.Price * i.ShippedQuantity
+            TotalPrice: i.Price * i.ShippedQuantity
         )).ToList();
 
         var productsTotalSum = mappedItems.Sum(i => i.TotalPrice);
@@ -61,12 +62,16 @@ internal static class MappingExtensions
             ConsumerName: waybill.Contract.Consumer.Name,
             ConsumerAddress: waybill.Contract.Consumer.Address,
             ConsumerBankAccount: waybill.Contract.Consumer.BankAccount,
+            TransportTypeCode: transportTypeCode,
             TransportType: transportType,
             TransportDetails: details,
             Items: mappedItems,
             ProductsTotalSum: productsTotalSum,
             TransportServiceSum: transportSum,
-            TotalAmount: totalAmount
+            TotalAmount: totalAmount,
+            DeliveryBaseCost: waybill.DeliveryBaseCost,
+            DeliveryCommissionCost: waybill.DeliveryCommissionCost,
+            DeliveryTransportMultiplier: waybill.DeliveryTransportMultiplier
         );
     }
 }

@@ -1,15 +1,19 @@
 using Terminus.Domain.Enums;
+using Terminus.Domain.ValueObjects;
 
 namespace Terminus.Domain.Entities;
 
 public abstract class Waybill
 {
     public Guid Id { get; private set; }
-    public string WaybillNumber { get; private set; } 
-    
+    public string WaybillNumber { get; private set; }
+
     public WaybillStatus Status { get; private set; } = WaybillStatus.Draft;
-    public DateTime? DispatchDate { get; private set; }   
-    
+    public DateTime? DispatchDate { get; private set; }
+    public decimal DeliveryBaseCost { get; private set; }
+    public decimal DeliveryCommissionCost { get; private set; }
+    public decimal DeliveryTransportMultiplier { get; private set; }
+
     protected readonly List<WaybillItem> _items = new();
     public IReadOnlyCollection<WaybillItem> Items => _items.AsReadOnly();
 
@@ -18,11 +22,14 @@ public abstract class Waybill
 
     protected Waybill() { }
 
-    protected Waybill(string waybillNumber, Guid contractId)
+    protected Waybill(string waybillNumber, Guid contractId, DeliveryCostBreakdown deliveryCost)
     {
         Id = Guid.CreateVersion7();
         WaybillNumber = waybillNumber;
         ContractId = contractId;
+        DeliveryBaseCost = deliveryCost.BaseCost;
+        DeliveryCommissionCost = deliveryCost.CommissionCost;
+        DeliveryTransportMultiplier = deliveryCost.TransportMultiplier;
     }
     public void Cancel()
     {
@@ -48,18 +55,18 @@ public class AutoWaybill : Waybill
 
     private AutoWaybill() { }
 
-    private AutoWaybill(string waybillNumber, Guid contractId, string carNumber, string routeSheetNumber, decimal serviceSum) 
-        : base(waybillNumber, contractId)
+    private AutoWaybill(string waybillNumber, Guid contractId, string carNumber, string routeSheetNumber, DeliveryCostBreakdown deliveryCost)
+        : base(waybillNumber, contractId, deliveryCost)
     {
         CarNumber = carNumber;
         RouteSheetNumber = routeSheetNumber;
-        AutoServiceSum = serviceSum;
+        AutoServiceSum = deliveryCost.Total;
     }
 
-    public static AutoWaybill Create(string waybillNumber, Guid contractId, 
-        string carNumber, string routeSheetNumber, decimal serviceSum, IEnumerable<WaybillItem> items)
+    public static AutoWaybill Create(string waybillNumber, Guid contractId,
+        string carNumber, string routeSheetNumber, DeliveryCostBreakdown deliveryCost, IEnumerable<WaybillItem> items)
     {
-        var waybill = new AutoWaybill(waybillNumber, contractId, carNumber, routeSheetNumber, serviceSum);
+        var waybill = new AutoWaybill(waybillNumber, contractId, carNumber, routeSheetNumber, deliveryCost);
         waybill._items.AddRange(items);
         return waybill;
     }
@@ -73,18 +80,18 @@ public class TrainWaybill : Waybill
 
     private TrainWaybill() { }
 
-    private TrainWaybill(string waybillNumber, Guid contractId, string containerNumber, string railwayReceiptNumber, decimal serviceSum) 
-        : base(waybillNumber, contractId)
+    private TrainWaybill(string waybillNumber, Guid contractId, string containerNumber, string railwayReceiptNumber, DeliveryCostBreakdown deliveryCost)
+        : base(waybillNumber, contractId, deliveryCost)
     {
         ContainerNumber = containerNumber;
         RailwayReceiptNumber = railwayReceiptNumber;
-        TrainServiceSum = serviceSum;
+        TrainServiceSum = deliveryCost.Total;
     }
 
-    public static TrainWaybill Create(string waybillNumber, Guid contractId, 
-        string containerNumber, string receiptNumber, decimal serviceSum, IEnumerable<WaybillItem> items)
+    public static TrainWaybill Create(string waybillNumber, Guid contractId,
+        string containerNumber, string receiptNumber, DeliveryCostBreakdown deliveryCost, IEnumerable<WaybillItem> items)
     {
-        var waybill = new TrainWaybill(waybillNumber, contractId, containerNumber, receiptNumber, serviceSum);
+        var waybill = new TrainWaybill(waybillNumber, contractId, containerNumber, receiptNumber, deliveryCost);
         waybill._items.AddRange(items);
         return waybill;
     }
@@ -98,18 +105,18 @@ public class AviaWaybill : Waybill
 
     private AviaWaybill() { }
 
-    private AviaWaybill(string waybillNumber, Guid contractId, string flightNumber, string aviaReceiptNumber, decimal serviceSum) 
-        : base(waybillNumber, contractId)
+    private AviaWaybill(string waybillNumber, Guid contractId, string flightNumber, string aviaReceiptNumber, DeliveryCostBreakdown deliveryCost)
+        : base(waybillNumber, contractId, deliveryCost)
     {
         FlightNumber = flightNumber;
         AviaReceiptNumber = aviaReceiptNumber;
-        AviaServiceSum = serviceSum;
+        AviaServiceSum = deliveryCost.Total;
     }
 
-    public static AviaWaybill Create(string waybillNumber, Guid contractId, 
-        string flightNumber, string receiptNumber, decimal serviceSum, IEnumerable<WaybillItem> items)
+    public static AviaWaybill Create(string waybillNumber, Guid contractId,
+        string flightNumber, string receiptNumber, DeliveryCostBreakdown deliveryCost, IEnumerable<WaybillItem> items)
     {
-        var waybill = new AviaWaybill(waybillNumber, contractId, flightNumber, receiptNumber, serviceSum);
+        var waybill = new AviaWaybill(waybillNumber, contractId, flightNumber, receiptNumber, deliveryCost);
         waybill._items.AddRange(items);
         return waybill;
     }

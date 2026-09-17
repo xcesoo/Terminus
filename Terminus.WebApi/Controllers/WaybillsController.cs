@@ -63,6 +63,8 @@ public class WaybillsController(ISender sender) : ControllerBase
     [HttpGet("{id:guid}/payment-demand/pdf")]
     public async Task<IActionResult> GetPaymentDemandPdf(Guid id, CancellationToken token)
     {
-        return Ok("pdf"); //todo
+        var result = await sender.Send(new GetPaymentDemandPdfQuery(id), token);
+        
+        return File(result.Content, "application/pdf", result.FileName);
     }
 }
