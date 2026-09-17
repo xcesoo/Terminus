@@ -28,15 +28,29 @@ public class WaybillsController(ISender sender) : ControllerBase
     }
     
     [HttpGet("daily")]
-    public async Task<IActionResult> GetDaily([FromQuery] DateTime date, CancellationToken token) 
+    public async Task<IActionResult> GetDaily([FromQuery] DateTime date, CancellationToken token)
     {
-        return Ok(await sender.Send(new GetDailyWaybillsQuery(date), token)); 
+        return Ok(await sender.Send(new GetDailyWaybillsQuery(date), token));
     }
 
     [HttpGet("monthly")]
-    public async Task<IActionResult> GetMonthly([FromQuery] int year, [FromQuery] int month, CancellationToken token) 
+    public async Task<IActionResult> GetMonthly([FromQuery] int year, [FromQuery] int month, CancellationToken token)
     {
-        return Ok(await sender.Send(new GetMonthlyWaybillsQuery(year, month), token)); 
+        return Ok(await sender.Send(new GetMonthlyWaybillsQuery(year, month), token));
+    }
+
+    [HttpGet("daily/pdf")]
+    public async Task<IActionResult> GetDailyPdf([FromQuery] DateTime date, CancellationToken token)
+    {
+        var result = await sender.Send(new GetDailyShipmentStatementPdfQuery(date), token);
+        return File(result.Content, "application/pdf", result.FileName);
+    }
+
+    [HttpGet("monthly/pdf")]
+    public async Task<IActionResult> GetMonthlyPdf([FromQuery] int year, [FromQuery] int month, CancellationToken token)
+    {
+        var result = await sender.Send(new GetMonthlyShipmentStatementPdfQuery(year, month), token);
+        return File(result.Content, "application/pdf", result.FileName);
     }
 
     [HttpPost]

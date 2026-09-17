@@ -26,7 +26,14 @@ public class ContractsController(ISender sender) : ControllerBase
     {
         return Ok(await sender.Send(new SearchContractsQuery(term), token));
     }
-    
+
+    [HttpGet("{id:guid}/pdf")]
+    public async Task<IActionResult> GetPdf(Guid id, CancellationToken token)
+    {
+        var result = await sender.Send(new GetContractPdfQuery(id), token);
+        return File(result.Content, "application/pdf", result.FileName);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateContractCommand command, CancellationToken token)
     {

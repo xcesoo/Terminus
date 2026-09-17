@@ -5,6 +5,7 @@ namespace Terminus.Application.DTOs;
 public record WaybillDto(
     Guid Id,
     string WaybillNumber,
+    string ContractNumber,
     DateTime? DispatchDate,
     WaybillStatus Status,
     

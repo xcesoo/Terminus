@@ -57,6 +57,7 @@ internal static class MappingExtensions
         return new WaybillDto(
             Id: waybill.Id,
             WaybillNumber: waybill.WaybillNumber,
+            ContractNumber: waybill.Contract.ContractNumber,
             DispatchDate: waybill.DispatchDate,
             Status: waybill.Status,
             ConsumerName: waybill.Contract.Consumer.Name,

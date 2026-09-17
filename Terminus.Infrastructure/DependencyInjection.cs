@@ -32,6 +32,8 @@ public static class DependencyInjection
         services.AddScoped<IContractRepository, ContractRepository>();
         
         services.AddTransient<IPaymentDemandPdfGenerator, QuestPdfPaymentDemandGenerator>();
+        services.AddTransient<IShipmentStatementPdfGenerator, QuestPdfShipmentStatementGenerator>();
+        services.AddTransient<IContractPdfGenerator, QuestPdfContractGenerator>();
 
         var deliveryPricing = configuration.GetSection(DeliveryPricingOptions.SectionName).Get<DeliveryPricingOptions>()
                                ?? new DeliveryPricingOptions();
